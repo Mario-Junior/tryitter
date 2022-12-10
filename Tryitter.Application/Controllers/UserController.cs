@@ -42,7 +42,7 @@ public class UserController : ControllerBase
 
     string token = tokenGenerator.Generate(userFound);
 
-    return Ok(token);
+    return Ok($"Bearer {token}");
   }
 
   [HttpGet("{username}")]
