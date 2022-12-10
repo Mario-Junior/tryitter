@@ -71,4 +71,19 @@ public class UserRepository
     if(user is null) return null!;
     return user;
   }
+
+  public void UpdateUser(UserUpdateDTO user)
+  {
+    var userFound = _context.Users.Find(user.Username);
+    if (userFound is not null)
+    {
+      userFound.Email = String.IsNullOrEmpty(user.Email) ? userFound.Email : user.Email;
+      userFound.Module = String.IsNullOrEmpty(user.Module) ? userFound.Module : user.Module;
+      userFound.Name = String.IsNullOrEmpty(user.Name) ? userFound.Name : user.Name;
+      userFound.Password = String.IsNullOrEmpty(user.Password) ? userFound.Password : user.Password;
+      userFound.Photo = String.IsNullOrEmpty(user.Photo) ? userFound.Photo : user.Photo;
+      userFound.Status = String.IsNullOrEmpty(user.Status) ? userFound.Status : user.Status;
+      _context.SaveChanges();
+    }
+  }
 }

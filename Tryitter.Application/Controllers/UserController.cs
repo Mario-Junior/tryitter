@@ -21,9 +21,9 @@ public class UserController : ControllerBase
   [AllowAnonymous]
   public IActionResult CreateUser([FromBody] UserCreateDTO user)
   {
-    var userExists = _repository.GetUserByUsername(user.Username);
+    var userFound = _repository.GetUserByUsername(user.Username);
 
-    if (userExists is not null)
+    if (userFound is not null)
       return BadRequest("User already exists with this username");
       
     return Created("", _repository.CreateUser(user));
@@ -53,5 +53,16 @@ public class UserController : ControllerBase
 
     if (user is null) return NotFound("Username not found");
     return Ok(user);
+  }
+
+  [HttpPut]
+  [Authorize(Policy = "AuthorizedUser")]
+  public IActionResult UpdateUser([FromBody] UserUpdateDTO user)
+  {
+    var authenticatedUsername = User.Identity!.Name;
+    if (authenticatedUsername != user.Username) return Forbid();
+
+    _repository.UpdateUser(user);
+    return Ok("User updated");
   }
 }

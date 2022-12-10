@@ -12,7 +12,7 @@ using Tryitter.Repository;
 namespace Tryitter.Application.Migrations
 {
     [DbContext(typeof(TryitterContext))]
-    [Migration("20221210123713_tables-creation")]
+    [Migration("20221210142635_tables-creation")]
     partial class tablescreation
     {
         /// <inheritdoc />
