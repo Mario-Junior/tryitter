@@ -72,6 +72,30 @@ public class UserRepository
     return user;
   }
 
+  public IEnumerable<UserGetAllDTO> GetAllUsers()
+  {
+    var userList = _context.Users
+      .Select(u => new UserGetAllDTO
+      {
+        Username = u.Username,
+        Name = u.Name,
+        Photo = u.Photo,
+        Module = u.Module,
+        Status = u.Status,
+        Posts = u.Posts.Select(p => new PostGetDTO
+        {
+          Id = p.Id,
+          Text = p.Text,
+          Image = p.Image,
+          Username = p.Username,
+          CreatedAt = p.CreatedAt,
+          UpdatedAt = p.UpdatedAt
+        }).ToList()
+      });
+    
+    return userList;
+  }
+
   public void UpdateUser(UserUpdateDTO user)
   {
     var userFound = _context.Users.Find(user.Username);

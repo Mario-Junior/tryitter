@@ -55,6 +55,14 @@ public class UserController : ControllerBase
     return Ok(user);
   }
 
+  [HttpGet]
+  [AllowAnonymous]
+  public IActionResult GetAllUsers()
+  {
+    var userList = _repository.GetAllUsers();
+    return Ok(userList);
+  }
+
   [HttpPut]
   [Authorize(Policy = "AuthorizedUser")]
   public IActionResult UpdateUser([FromBody] UserUpdateDTO user)

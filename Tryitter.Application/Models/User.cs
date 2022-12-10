@@ -41,6 +41,16 @@ public class UserGetDTO
   public ICollection<PostGetDTO> Posts { get; set; } = default!;
 }
 
+public class UserGetAllDTO
+{
+  public string Username { get; set; } = default!;
+  public string Name { get; set; } = default!;
+  public string? Photo { get; set; }
+  public string? Module { get; set; }
+  public string? Status { get; set; }
+  public ICollection<PostGetDTO> Posts { get; set; } = default!;
+}
+
 public class UserLoginDTO
 {
   public string Username { get; set; } = default!;
