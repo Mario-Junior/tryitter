@@ -20,6 +20,9 @@ public class PostController : ControllerBase
   [Authorize(Policy = "AuthorizedUser")]
   public IActionResult CreatePost([FromBody] PostCreateDTO post)
   {
+    var authenticatedUsername = User.Identity!.Name;
+    if (authenticatedUsername != post.Username) return Forbid();
+    
     return Created("", _repository.CreatePost(post));
   }
 

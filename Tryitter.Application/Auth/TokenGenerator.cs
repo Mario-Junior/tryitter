@@ -14,24 +14,23 @@ public class TokenGenerator
 
     var tokenDescriptor = new SecurityTokenDescriptor()
     {
-      Subject = AddClaims(user),
       SigningCredentials = new SigningCredentials(
         new SymmetricSecurityKey(Encoding.ASCII.GetBytes(TokenSecret)),
         SecurityAlgorithms.HmacSha256Signature),
-      Expires = DateTime.Now.AddDays(1)
+      Expires = DateTime.Now.AddDays(1),
+
+      Claims = new Dictionary<string, Object>(),
+
+      Subject = new ClaimsIdentity(new Claim[]
+      {
+        new Claim(ClaimTypes.Name, user.Username.ToString()),
+      })
     };
+
+    tokenDescriptor.Claims.Add("LoggedUser", true);
 
     var token = tokenHandler.CreateToken(tokenDescriptor);
 
     return tokenHandler.WriteToken(token);
-  }
-
-  private static ClaimsIdentity AddClaims(User user)
-  {
-    var claims = new ClaimsIdentity();
-
-    claims.AddClaim(new Claim("Username", user.Username.ToString()));
-
-    return claims;
   }
 }

@@ -34,7 +34,7 @@ builder.Services.AddAuthentication(options =>
 
 builder.Services.AddAuthorization(options =>
 {
-  options.AddPolicy("AuthorizedUser", policy => policy.RequireClaim("Username"));
+  options.AddPolicy("AuthorizedUser", policy => policy.RequireClaim("LoggedUser"));
 });
 builder.Services.AddEndpointsApiExplorer();
 
