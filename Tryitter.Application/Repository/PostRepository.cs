@@ -65,4 +65,20 @@ public class PostRepository
       UpdatedAt = post.UpdatedAt,
     };
   }
+
+  public IEnumerable<PostGetDTO> GetAllPosts()
+  {
+    var postList = _context.Posts
+      .Select(p => new PostGetDTO
+      {
+        Id = p.Id,
+        Text = p.Text,
+        Image = p.Image,
+        Username = p.Username,
+        CreatedAt = p.CreatedAt,
+        UpdatedAt = p.UpdatedAt
+      }).ToList();
+    
+    return postList;
+  }
 }

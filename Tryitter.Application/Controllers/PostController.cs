@@ -45,4 +45,12 @@ public class PostController : ControllerBase
     if (post is null) return NotFound("Post not found");
     return Ok(post);
   }
+
+  [HttpGet]
+  [AllowAnonymous]
+  public IActionResult GetAllPosts()
+  {
+    var postList = _repository.GetAllPosts();
+    return Ok(postList);
+  }
 }
