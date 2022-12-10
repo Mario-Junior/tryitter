@@ -93,4 +93,14 @@ public class PostRepository
       _context.SaveChanges();
     }
   }
+
+  public void DeletePost(Guid postId)
+  {
+    var postFound = _context.Posts.Find(postId);
+    if (postFound is not null)
+    {
+      _context.Posts.Remove(postFound);
+      _context.SaveChanges();
+    }
+  }
 }

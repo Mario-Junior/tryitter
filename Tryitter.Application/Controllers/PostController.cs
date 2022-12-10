@@ -68,4 +68,19 @@ public class PostController : ControllerBase
     _repository.UpdatePost(post);
     return Ok("Post updated");
   }
+
+  [HttpDelete("{username}")]
+  [Authorize(Policy = "AuthorizedUser")]
+  public IActionResult DeletePost([FromBody] Guid postId, string username)
+  {
+    var authenticatedUsername = User.Identity!.Name;
+    if (authenticatedUsername != username) return Forbid();
+
+    var postFound = _repository.GetPostByUsernameAndId(username, postId);
+
+    if (postFound is null) return NotFound("Post not found");
+
+    _repository.DeletePost(postId);
+    return NoContent();
+  }
 }
