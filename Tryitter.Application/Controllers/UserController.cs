@@ -65,4 +65,15 @@ public class UserController : ControllerBase
     _repository.UpdateUser(user);
     return Ok("User updated");
   }
+  
+  [HttpDelete]
+  [Authorize(Policy = "AuthorizedUser")]
+  public IActionResult DeleteUser([FromBody] string username)
+  {
+    var authenticatedUsername = User.Identity!.Name;
+    if (authenticatedUsername != username) return Forbid();
+
+    _repository.DeleteUser(username);
+    return NoContent();
+  }
 }

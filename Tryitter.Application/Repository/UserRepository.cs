@@ -86,4 +86,14 @@ public class UserRepository
       _context.SaveChanges();
     }
   }
+
+  public void DeleteUser(string username)
+  {
+    var userFound = _context.Users.Find(username);
+    if (userFound is not null)
+    {
+      _context.Users.Remove(userFound);
+      _context.SaveChanges();
+    }
+  }
 }
