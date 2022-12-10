@@ -53,4 +53,19 @@ public class PostController : ControllerBase
     var postList = _repository.GetAllPosts();
     return Ok(postList);
   }
+
+  [HttpPut("{username}")]
+  [Authorize(Policy = "AuthorizedUser")]
+  public IActionResult UpdatePost([FromBody] PostUpdateDTO post, string username)
+  {
+    var authenticatedUsername = User.Identity!.Name;
+    if (authenticatedUsername != username) return Forbid();
+
+    var postFound = _repository.GetPostByUsernameAndId(username, post.Id);
+
+    if (postFound is null) return NotFound("Post not found");
+
+    _repository.UpdatePost(post);
+    return Ok("Post updated");
+  }
 }

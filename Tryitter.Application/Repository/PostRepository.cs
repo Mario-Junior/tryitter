@@ -81,4 +81,16 @@ public class PostRepository
     
     return postList;
   }
+
+  public void UpdatePost(PostUpdateDTO post)
+  {
+    var postFound = _context.Posts.Find(post.Id);
+    if (postFound is not null)
+    {
+      postFound.Image = string.IsNullOrEmpty(post.Image) ? postFound.Image : post.Image;
+      postFound.Text = string.IsNullOrEmpty(post.Text) ? postFound.Text : post.Text;
+      postFound.UpdatedAt = DateTime.Now;
+      _context.SaveChanges();
+    }
+  }
 }

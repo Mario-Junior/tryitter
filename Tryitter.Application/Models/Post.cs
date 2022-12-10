@@ -39,3 +39,12 @@ public class PostGetDTO
   public DateTime CreatedAt { get; set; } = DateTime.Now;
   public DateTime UpdatedAt { get; set; } = DateTime.Now;
 }
+
+public class PostUpdateDTO
+{
+  public Guid Id { get; set; }
+  [MaxLength(300, ErrorMessage = "Maximum of {1} characters allowed")]
+  public string? Text { get; set; }
+  [MaxLength(300, ErrorMessage = "Maximum of {1} characters allowed")]
+  public string? Image { get; set; }
+}
