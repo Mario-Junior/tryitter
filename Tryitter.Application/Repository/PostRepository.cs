@@ -35,19 +35,20 @@ public class PostRepository
     };
   }
 
-  public PostGetDTO GetPostById(Guid postId)
+  public IEnumerable<PostGetDTO> GetPostsByUsername(string username)
   {
-    Post post = _context.Posts.Find(postId)!;
-    if (post is null) return null!;
-
-    return new PostGetDTO {
-      Id = post.Id,
-      Text = post.Text,
-      Image = post.Image,
-      Username = post.Username,
-      CreatedAt = post.CreatedAt,
-      UpdatedAt = post.UpdatedAt,
-    };
+    var postList = _context.Posts.Where(user => user.Username == username)
+      .Select(p => new PostGetDTO
+      {
+        Id = p.Id,
+        Text = p.Text,
+        Image = p.Image,
+        Username = p.Username,
+        CreatedAt = p.CreatedAt,
+        UpdatedAt = p.UpdatedAt
+      }).ToList();
+    
+    return postList;
   }
 
   public PostGetDTO GetPostByUsernameAndId(string username, Guid postId)

@@ -26,14 +26,13 @@ public class PostController : ControllerBase
     return Created("", _repository.CreatePost(post));
   }
 
-  [HttpGet("{postId}")]
+  [HttpGet("{username}")]
   [AllowAnonymous]
-  public IActionResult GetPostById(Guid postId)
+  public IActionResult GetPostsByUsername(string username)
   {
-    var post = _repository.GetPostById(postId);
-
-    if (post is null) return NotFound("Post not found");
-    return Ok(post);
+    var postList = _repository.GetPostsByUsername(username);
+    if (!postList.Any()) return NotFound("Posts of this username is not found");
+    return Ok(postList);
   }
 
   [HttpGet("{username}/{postId}")]
