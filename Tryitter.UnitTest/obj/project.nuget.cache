@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "K4ekaRsz9gWJepIXvHRnNEw3uV4GhCzJpj/7JKwrZMPJTyuYl9jHq8jOEgpiSoFgSTLublYyBrDpcjxk6fWt2Q==",
+  "dgSpecHash": "tI5zfJ8ft8aEs414cdHWfZrU5Ovo35qpMNky7fC27iGuqdoWnyunfy1Iqrqy7vH9HTMGnZN2ihXgNK8wVkq7KQ==",
   "success": true,
   "projectFilePath": "/home/mariojunior/csharp/projects/acc-csharp-08-final-project/Tryitter/Tryitter.UnitTest/Tryitter.UnitTest.csproj",
   "expectedPackageFiles": [
@@ -20,6 +20,7 @@
     "/home/mariojunior/.nuget/packages/microsoft.entityframeworkcore/7.0.0/microsoft.entityframeworkcore.7.0.0.nupkg.sha512",
     "/home/mariojunior/.nuget/packages/microsoft.entityframeworkcore.abstractions/7.0.0/microsoft.entityframeworkcore.abstractions.7.0.0.nupkg.sha512",
     "/home/mariojunior/.nuget/packages/microsoft.entityframeworkcore.analyzers/7.0.0/microsoft.entityframeworkcore.analyzers.7.0.0.nupkg.sha512",
+    "/home/mariojunior/.nuget/packages/microsoft.entityframeworkcore.inmemory/7.0.0/microsoft.entityframeworkcore.inmemory.7.0.0.nupkg.sha512",
     "/home/mariojunior/.nuget/packages/microsoft.entityframeworkcore.relational/7.0.0/microsoft.entityframeworkcore.relational.7.0.0.nupkg.sha512",
     "/home/mariojunior/.nuget/packages/microsoft.entityframeworkcore.sqlserver/7.0.0/microsoft.entityframeworkcore.sqlserver.7.0.0.nupkg.sha512",
     "/home/mariojunior/.nuget/packages/microsoft.extensions.apidescription.server/6.0.5/microsoft.extensions.apidescription.server.6.0.5.nupkg.sha512",

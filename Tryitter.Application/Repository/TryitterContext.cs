@@ -7,6 +7,8 @@ public class TryitterContext : DbContext
 {
   public TryitterContext(DbContextOptions<TryitterContext> options) : base(options) {}
 
+  public TryitterContext() {}
+
   public DbSet<User> Users { get; set; } = null!;
   public DbSet<Post> Posts { get; set; } = null!;
 
