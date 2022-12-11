@@ -1,5 +1,4 @@
 using Microsoft.EntityFrameworkCore;
-using Tryitter.Auth;
 using Tryitter.Models;
 using Tryitter.Repository;
 
