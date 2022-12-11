@@ -181,4 +181,25 @@ public class UserRepositoryTest
         result.Should().NotBeEquivalentTo(userFound);
         result.Should().BeNull();
     }
+
+    public readonly static TheoryData<TryitterContext> GetAllUsersData =
+    new()
+    {
+        Helpers.GetContextInstanceForTests("GetAllUsersTest")
+    };
+
+    [Theory(DisplayName = "Get all users successfully")]
+    [MemberData(nameof(GetAllUsersData))]
+    public async Task GetAllUsersTest(TryitterContext context)
+    {
+        // Arrange
+        context.ChangeTracker.Clear();
+        UserRepository _userRepository = new(context);
+
+        // Act
+        var result = await _userRepository.GetAllUsers();
+
+        // Assert
+        result.Count().Should().Be(3);
+    }
 }
