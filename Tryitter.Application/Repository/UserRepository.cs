@@ -99,7 +99,7 @@ public class UserRepository
   public async Task<bool> UpdateUser(UserUpdateDTO user)
   {
     var userFound = await _context.Users.FindAsync(user.Username);
-    if (userFound is not null)
+    if (userFound is null) return false;
     {
       userFound.Email = String.IsNullOrEmpty(user.Email) ? userFound.Email : user.Email;
       userFound.Module = String.IsNullOrEmpty(user.Module) ? userFound.Module : user.Module;

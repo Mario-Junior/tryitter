@@ -182,15 +182,18 @@ public class UserRepositoryTest
         result.Should().BeNull();
     }
 
-    public readonly static TheoryData<TryitterContext> GetAllUsersData =
+    public readonly static TheoryData<TryitterContext, int> GetAllUsersData =
     new()
     {
-        Helpers.GetContextInstanceForTests("GetAllUsersTest")
+        {
+            Helpers.GetContextInstanceForTests("GetAllUsersTest"),
+            3
+        },
     };
 
     [Theory(DisplayName = "Get all users successfully")]
     [MemberData(nameof(GetAllUsersData))]
-    public async Task GetAllUsersTest(TryitterContext context)
+    public async Task GetAllUsersTest(TryitterContext context, int userListLength)
     {
         // Arrange
         context.ChangeTracker.Clear();
@@ -200,6 +203,62 @@ public class UserRepositoryTest
         var result = await _userRepository.GetAllUsers();
 
         // Assert
-        result.Count().Should().Be(3);
+        result.Count().Should().Be(userListLength);
+    }
+
+    public readonly static TheoryData<TryitterContext, UserUpdateDTO> UpdateUserOkTestData =
+    new()
+    {
+        {
+            Helpers.GetContextInstanceForTests("UpdateUserOkTest"),
+            new UserUpdateDTO {
+                    Username = "test1",
+                    Name = "test update",
+                    Status = "testing update"
+                }
+        },
+    };
+
+    [Theory(DisplayName = "Update user successfully")]
+    [MemberData(nameof(UpdateUserOkTestData))]
+    public async Task UpdateUserOkTest(TryitterContext context, UserUpdateDTO userToUpdate)
+    {
+        // Arrange
+        context.ChangeTracker.Clear();
+        UserRepository _userRepository = new(context);
+
+        // Act
+        var result = await _userRepository.UpdateUser(userToUpdate);
+
+        // Assert
+        result.Should().BeTrue();
+    }
+
+    public readonly static TheoryData<TryitterContext, UserUpdateDTO> UpdateUserFailTestData =
+    new()
+    {
+        {
+            Helpers.GetContextInstanceForTests("UpdateUserFailTest"),
+            new UserUpdateDTO {
+                    Username = "test100",
+                    Name = "test update",
+                    Status = "testing update"
+                }
+        },
+    };
+
+    [Theory(DisplayName = "Update user not successfully")]
+    [MemberData(nameof(UpdateUserFailTestData))]
+    public async Task UpdateUserFailTest(TryitterContext context, UserUpdateDTO userToUpdate)
+    {
+        // Arrange
+        context.ChangeTracker.Clear();
+        UserRepository _userRepository = new(context);
+
+        // Act
+        var result = await _userRepository.UpdateUser(userToUpdate);
+
+        // Assert
+        result.Should().BeFalse();
     }
 }
