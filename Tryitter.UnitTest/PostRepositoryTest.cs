@@ -206,4 +206,52 @@ public class PostRepositoryTest
         // Assert
         result.Should().BeFalse();
     }
+
+    public readonly static TheoryData<TryitterContext, Guid> DeletePostOkTestData =
+    new()
+    {
+        {
+            Helpers.GetContextInstanceForTests("DeletePostOkTest"),
+            new Guid("123e4567e89b12d3a456426655440000")
+        },
+    };
+
+    [Theory(DisplayName = "Delete post successfully")]
+    [MemberData(nameof(DeletePostOkTestData))]
+    public async Task DeletePostOkTest(TryitterContext context, Guid postIdToDelete)
+    {
+        // Arrange
+        context.ChangeTracker.Clear();
+        PostRepository _postRepository = new(context);
+
+        // Act
+        var result = await _postRepository.DeletePost(postIdToDelete);
+
+        // Assert
+        result.Should().BeTrue();
+    }
+
+    public readonly static TheoryData<TryitterContext, Guid> DeletePostFailTestData =
+    new()
+    {
+        {
+            Helpers.GetContextInstanceForTests("DeletePostFailTest"),
+            new Guid("123e4567e89b12d3a456426655440001")
+        },
+    };
+
+    [Theory(DisplayName = "Delete post successfully")]
+    [MemberData(nameof(DeletePostFailTestData))]
+    public async Task DeletePostFailTest(TryitterContext context, Guid postIdToDeleteWrong)
+    {
+        // Arrange
+        context.ChangeTracker.Clear();
+        PostRepository _postRepository = new(context);
+
+        // Act
+        var result = await _postRepository.DeletePost(postIdToDeleteWrong);
+
+        // Assert
+        result.Should().BeFalse();
+    }
 }
