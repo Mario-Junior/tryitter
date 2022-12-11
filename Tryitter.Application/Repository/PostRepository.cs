@@ -88,7 +88,7 @@ public class PostRepository
   public async Task<bool> UpdatePost(PostUpdateDTO post)
   {
     var postFound = await _context.Posts.FindAsync(post.Id);
-    if (postFound is not null)
+    if (postFound is null) return false;
     {
       postFound.Image = string.IsNullOrEmpty(post.Image) ? postFound.Image : post.Image;
       postFound.Text = string.IsNullOrEmpty(post.Text) ? postFound.Text : post.Text;
@@ -101,7 +101,7 @@ public class PostRepository
   public async Task<bool> DeletePost(Guid postId)
   {
     var postFound = await _context.Posts.FindAsync(postId);
-    if (postFound is not null)
+    if (postFound is null) return false;
     {
       await Task.Run(() => _context.Posts.Remove(postFound));
       await _context.SaveChangesAsync();

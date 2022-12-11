@@ -152,4 +152,58 @@ public class PostRepositoryTest
         // Assert
         result.Count().Should().Be(postListLength);
     }
+
+    public readonly static TheoryData<TryitterContext, PostUpdateDTO> UpdatePostOkTestData =
+    new()
+    {
+        {
+            Helpers.GetContextInstanceForTests("UpdatePostOkTest"),
+            new PostUpdateDTO {
+                    Id = new Guid("123e4567e89b12d3a456426655440000"),
+                    Text = "Post update",
+                }
+        },
+    };
+
+    [Theory(DisplayName = "Update post successfully")]
+    [MemberData(nameof(UpdatePostOkTestData))]
+    public async Task UpdatePostOkTest(TryitterContext context, PostUpdateDTO postToUpdate)
+    {
+        // Arrange
+        context.ChangeTracker.Clear();
+        PostRepository _postRepository = new(context);
+
+        // Act
+        var result = await _postRepository.UpdatePost(postToUpdate);
+
+        // Assert
+        result.Should().BeTrue();
+    }
+
+    public readonly static TheoryData<TryitterContext, PostUpdateDTO> UpdatePostFailTestData =
+    new()
+    {
+        {
+            Helpers.GetContextInstanceForTests("UpdatePostFailTest"),
+            new PostUpdateDTO {
+                    Id = new Guid("123e4567e89b12d3a456426655440001"),
+                    Text = "Post update",
+                }
+        },
+    };
+
+    [Theory(DisplayName = "Update post not successfully")]
+    [MemberData(nameof(UpdatePostFailTestData))]
+    public async Task UpdatePostFailTest(TryitterContext context, PostUpdateDTO postToUpdateWrong)
+    {
+        // Arrange
+        context.ChangeTracker.Clear();
+        PostRepository _postRepository = new(context);
+
+        // Act
+        var result = await _postRepository.UpdatePost(postToUpdateWrong);
+
+        // Assert
+        result.Should().BeFalse();
+    }
 }
