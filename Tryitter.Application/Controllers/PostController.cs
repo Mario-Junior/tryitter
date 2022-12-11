@@ -18,28 +18,28 @@ public class PostController : ControllerBase
 
   [HttpPost]
   [Authorize(Policy = "AuthorizedUser")]
-  public IActionResult CreatePost([FromBody] PostCreateDTO post)
+  public async Task<IActionResult> CreatePost([FromBody] PostCreateDTO post)
   {
     var authenticatedUsername = User.Identity!.Name;
     if (authenticatedUsername != post.Username) return Forbid();
     
-    return Created("", _repository.CreatePost(post));
+    return Created("", await _repository.CreatePost(post));
   }
 
   [HttpGet("{username}")]
   [AllowAnonymous]
-  public IActionResult GetPostsByUsername(string username)
+  public async Task<IActionResult> GetPostsByUsername(string username)
   {
-    var postList = _repository.GetPostsByUsername(username);
+    var postList = await _repository.GetPostsByUsername(username);
     if (!postList.Any()) return NotFound("Posts of this username is not found");
     return Ok(postList);
   }
 
   [HttpGet("{username}/{postId}")]
   [AllowAnonymous]
-  public IActionResult GetPostByUsernameAndId(string username, Guid postId)
+  public async Task<IActionResult> GetPostByUsernameAndId(string username, Guid postId)
   {
-    var post = _repository.GetPostByUsernameAndId(username, postId);
+    var post = await _repository.GetPostByUsernameAndId(username, postId);
 
     if (post is null) return NotFound("Post not found");
     return Ok(post);
@@ -47,39 +47,39 @@ public class PostController : ControllerBase
 
   [HttpGet]
   [AllowAnonymous]
-  public IActionResult GetAllPosts()
+  public async Task<IActionResult> GetAllPosts()
   {
-    var postList = _repository.GetAllPosts();
+    var postList = await _repository.GetAllPosts();
     return Ok(postList);
   }
 
   [HttpPut("{username}")]
   [Authorize(Policy = "AuthorizedUser")]
-  public IActionResult UpdatePost([FromBody] PostUpdateDTO post, string username)
+  public async Task<IActionResult> UpdatePost([FromBody] PostUpdateDTO post, string username)
   {
     var authenticatedUsername = User.Identity!.Name;
     if (authenticatedUsername != username) return Forbid();
 
-    var postFound = _repository.GetPostByUsernameAndId(username, post.Id);
+    var postFound = await _repository.GetPostByUsernameAndId(username, post.Id);
 
     if (postFound is null) return NotFound("Post not found");
 
-    _repository.UpdatePost(post);
+    await _repository.UpdatePost(post);
     return Ok("Post updated");
   }
 
   [HttpDelete("{username}")]
   [Authorize(Policy = "AuthorizedUser")]
-  public IActionResult DeletePost([FromBody] Guid postId, string username)
+  public async Task<IActionResult> DeletePost([FromBody] Guid postId, string username)
   {
     var authenticatedUsername = User.Identity!.Name;
     if (authenticatedUsername != username) return Forbid();
 
-    var postFound = _repository.GetPostByUsernameAndId(username, postId);
+    var postFound = await _repository.GetPostByUsernameAndId(username, postId);
 
     if (postFound is null) return NotFound("Post not found");
 
-    _repository.DeletePost(postId);
+    await _repository.DeletePost(postId);
     return NoContent();
   }
 }

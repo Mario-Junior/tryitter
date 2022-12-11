@@ -23,7 +23,7 @@ public class PostRepository
       UpdatedAt = DateTime.Now,
     };
     await _context.Posts.AddAsync(newPost);
-    _context.SaveChanges();
+    await _context.SaveChangesAsync();
 
     return new PostGetDTO {
       Id = newPost.Id,
@@ -35,7 +35,7 @@ public class PostRepository
     };
   }
 
-  public IEnumerable<PostGetDTO> GetPostsByUsername(string username)
+  public async Task<IEnumerable<PostGetDTO>> GetPostsByUsername(string username)
   {
     var postList = _context.Posts.Where(user => user.Username == username)
       .Select(p => new PostGetDTO
@@ -48,26 +48,28 @@ public class PostRepository
         UpdatedAt = p.UpdatedAt
       }).ToList();
     
-    return postList;
+    return await Task.FromResult(postList);
   }
 
-  public PostGetDTO GetPostByUsernameAndId(string username, Guid postId)
+  public async Task<PostGetDTO> GetPostByUsernameAndId(string username, Guid postId)
   {
     var post = _context.Posts.Where(user => user.Username == username)
       .Where(postd => postd.Id == postId).FirstOrDefault();
     if (post is null) return null!;
 
-    return new PostGetDTO {
+    return await Task.FromResult(
+      new PostGetDTO {
       Id = post.Id,
       Text = post.Text,
       Image = post.Image,
       Username = post.Username,
       CreatedAt = post.CreatedAt,
       UpdatedAt = post.UpdatedAt,
-    };
+      }
+    );
   }
 
-  public IEnumerable<PostGetDTO> GetAllPosts()
+  public async Task<IEnumerable<PostGetDTO>> GetAllPosts()
   {
     var postList = _context.Posts
       .Select(p => new PostGetDTO
@@ -80,28 +82,30 @@ public class PostRepository
         UpdatedAt = p.UpdatedAt
       }).ToList();
     
-    return postList;
+    return await Task.FromResult(postList);
   }
 
-  public void UpdatePost(PostUpdateDTO post)
+  public async Task<bool> UpdatePost(PostUpdateDTO post)
   {
-    var postFound = _context.Posts.Find(post.Id);
+    var postFound = await _context.Posts.FindAsync(post.Id);
     if (postFound is not null)
     {
       postFound.Image = string.IsNullOrEmpty(post.Image) ? postFound.Image : post.Image;
       postFound.Text = string.IsNullOrEmpty(post.Text) ? postFound.Text : post.Text;
       postFound.UpdatedAt = DateTime.Now;
-      _context.SaveChanges();
+      await _context.SaveChangesAsync();
     }
+    return true;
   }
 
-  public void DeletePost(Guid postId)
+  public async Task<bool> DeletePost(Guid postId)
   {
-    var postFound = _context.Posts.Find(postId);
+    var postFound = await _context.Posts.FindAsync(postId);
     if (postFound is not null)
     {
-      _context.Posts.Remove(postFound);
-      _context.SaveChanges();
+      await Task.Run(() => _context.Posts.Remove(postFound));
+      await _context.SaveChangesAsync();
     }
+    return true;
   }
 }
