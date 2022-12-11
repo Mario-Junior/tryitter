@@ -1,13 +1,15 @@
-using Newtonsoft.Json;
-using System.Net;
-using System.Net.Http.Json;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using Newtonsoft.Json;
+using System.Net;
+using System.Net.Http.Headers;
+using System.Net.Http.Json;
+using System.Text;
 using Tryitter.Application;
 using Tryitter.Models;
 using Tryitter.Repository;
-using System.Text;
+using Tryitter.Auth;
 
 namespace Tryitter.IntegrationTest;
 
@@ -116,10 +118,53 @@ public class UserIntegrationTest : IClassFixture<TestingWebAppFactory<Program>>
 
     [Theory(DisplayName = "GET /User returns an user list")]
     [InlineData("/user")]
-    public async Task GetAllUsersTest(string url)
+    public async Task GetAllUsersTest(string path)
     {
-        var response = await _client.GetAsync(url);
+        var response = await _client.GetAsync(path);
 
         response.StatusCode.Should().Be(HttpStatusCode.OK);
+    }
+
+    public readonly static TheoryData<string, UserUpdateDTO, string> UpdateUserTestData =
+    new()
+    {
+        {
+            "/user",
+            new UserUpdateDTO {
+                Username = "test2",
+                Name = "test Update",
+                Status = "testing update",
+            },
+            "User updated"
+        },
+    };
+
+    [Theory(DisplayName = "PUT /User updates the user successfully")]
+    [MemberData(nameof(UpdateUserTestData))]
+    public async Task UpdateUserTest(string path, UserUpdateDTO userToUpdate, string responseJsonContent)
+    {
+        // Arrange
+        var userDataJson = JsonConvert.SerializeObject(userToUpdate);
+        var requestContent = new StringContent(userDataJson, Encoding.UTF8, "application/json");
+        User userToToken = new() {
+            Username = "test2",
+            Email = "test2@test.com",
+            Name = "test 2",
+            Password = "test1234",
+            Photo = "http://local.com/test2.jpg",
+            Module = "Computer Science",
+            Status = "testing 2",
+            CreatedAt = DateTime.Today
+        };
+        var token = new TokenGenerator().Generate(userToToken);
+        _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+        // Act
+        var response = await _client.PutAsync(path, requestContent);
+        var responseContent = await response.Content.ReadAsStringAsync();
+
+        // Assert
+        response.StatusCode.Should().Be(HttpStatusCode.OK);
+        responseContent.Should().Contain(responseJsonContent);
     }
 }
