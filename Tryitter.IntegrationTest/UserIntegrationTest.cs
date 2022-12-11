@@ -39,7 +39,7 @@ public class UserIntegrationTest : IClassFixture<TestingWebAppFactory<Program>>
         },
     };
 
-    [Theory(DisplayName = "POST /User creates new user")]
+    [Theory(DisplayName = "POST /User creates a new user successfully")]
     [MemberData(nameof(CreateUserTestData))]
     public async Task CreateUserTest(string path, UserCreateDTO newUser, string responseJsonContent)
     {
@@ -69,7 +69,7 @@ public class UserIntegrationTest : IClassFixture<TestingWebAppFactory<Program>>
         },
     };
 
-    [Theory(DisplayName = "POST /User/login generates JWT Token successfully")]
+    [Theory(DisplayName = "POST /User/login generates a JWT Token successfully")]
     [MemberData(nameof(LoginTestData))]
     public async Task LoginTest(string path, UserLoginDTO userToLogin, string responseJsonContent)
     {
@@ -86,6 +86,32 @@ public class UserIntegrationTest : IClassFixture<TestingWebAppFactory<Program>>
         response.StatusCode.Should().Be(HttpStatusCode.OK);
         responseTokenContent.Should().Contain(responseJsonContent);
         tokenParts.Length.Should().Be(3);
+    }
+
+    public readonly static TheoryData<string, string, string> GetUserByUsernameTestData =
+    new()
+    {
+        {
+            "/user",
+            "test1",
+            "{\"username\":\"test1\",\"email\":\"test1@test.com\",\"name\":\"test 1\""
+        },
+    };
+
+    [Theory(DisplayName = "GET /User/{username} returns an user by username successfully")]
+    [MemberData(nameof(GetUserByUsernameTestData))]
+    public async Task GetUserByUsernameTest(string path, string username, string responseJsonContent)
+    {
+        // Arrange
+        var pathToGet = $"{path}/{username}";
+
+        // Act
+        var response = await _client.GetAsync(pathToGet);
+        var responseContent = await response.Content.ReadAsStringAsync();
+
+        // Assert
+        response.StatusCode.Should().Be(HttpStatusCode.OK);
+        responseContent.Should().Contain(responseJsonContent);
     }
 
     [Theory(DisplayName = "GET /User returns an user list")]
