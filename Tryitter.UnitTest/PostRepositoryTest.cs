@@ -128,4 +128,28 @@ public class PostRepositoryTest
         result.Should().NotBeEquivalentTo(postExpected);
         result.Should().BeNull();
     }
+
+    public readonly static TheoryData<TryitterContext, int> GetAllPostsData =
+    new()
+    {
+        {
+            Helpers.GetContextInstanceForTests("GetAllPostsTest"),
+            6
+        },
+    };
+
+    [Theory(DisplayName = "Get all posts successfully")]
+    [MemberData(nameof(GetAllPostsData))]
+    public async Task GetAllPostsTest(TryitterContext context, int postListLength)
+    {
+        // Arrange
+        context.ChangeTracker.Clear();
+        PostRepository _postRepository = new(context);
+
+        // Act
+        var result = await _postRepository.GetAllPosts();
+
+        // Assert
+        result.Count().Should().Be(postListLength);
+    }
 }
