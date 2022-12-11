@@ -19,21 +19,21 @@ public class UserController : ControllerBase
 
   [HttpPost]
   [AllowAnonymous]
-  public IActionResult CreateUser([FromBody] UserCreateDTO user)
+  public async Task<IActionResult> CreateUser([FromBody] UserCreateDTO user)
   {
-    var userFound = _repository.GetUserByUsername(user.Username);
+    var userFound = await _repository.GetUserByUsername(user.Username);
 
     if (userFound is not null)
       return BadRequest("User already exists with this username");
       
-    return Created("", _repository.CreateUser(user));
+    return Created("", await _repository.CreateUser(user));
   }
 
   [HttpPost("login")]
   [AllowAnonymous]
-  public IActionResult Login([FromBody] UserLoginDTO user)
+  public async Task<IActionResult> Login([FromBody] UserLoginDTO user)
   {
-    var userFound = _repository.LoginValidate(user.Username, user.Password);
+    var userFound = await _repository.LoginValidate(user.Username, user.Password);
 
     if (userFound is null)
       return NotFound("Username and/or password invalid");
@@ -47,9 +47,9 @@ public class UserController : ControllerBase
 
   [HttpGet("{username}")]
   [AllowAnonymous]
-  public IActionResult GetUserByUsername(string username)
+  public async Task<IActionResult> GetUserByUsername(string username)
   {
-    var user = _repository.GetUserByUsername(username);
+    var user = await _repository.GetUserByUsername(username);
 
     if (user is null) return NotFound("Username not found");
     return Ok(user);
@@ -57,31 +57,31 @@ public class UserController : ControllerBase
 
   [HttpGet]
   [AllowAnonymous]
-  public IActionResult GetAllUsers()
+  public async Task<IActionResult> GetAllUsers()
   {
-    var userList = _repository.GetAllUsers();
+    var userList = await _repository.GetAllUsers();
     return Ok(userList);
   }
 
   [HttpPut]
   [Authorize(Policy = "AuthorizedUser")]
-  public IActionResult UpdateUser([FromBody] UserUpdateDTO user)
+  public async Task<IActionResult> UpdateUser([FromBody] UserUpdateDTO user)
   {
     var authenticatedUsername = User.Identity!.Name;
     if (authenticatedUsername != user.Username) return Forbid();
 
-    _repository.UpdateUser(user);
+    await _repository.UpdateUser(user);
     return Ok("User updated");
   }
   
   [HttpDelete]
   [Authorize(Policy = "AuthorizedUser")]
-  public IActionResult DeleteUser([FromBody] string username)
+  public async Task<IActionResult> DeleteUser([FromBody] string username)
   {
     var authenticatedUsername = User.Identity!.Name;
     if (authenticatedUsername != username) return Forbid();
 
-    _repository.DeleteUser(username);
+    await _repository.DeleteUser(username);
     return NoContent();
   }
 }

@@ -26,7 +26,7 @@ public class UserRepository
       CreatedAt = DateTime.Now,
     };
     await _context.Users.AddAsync(newUser);
-    _context.SaveChanges();
+    await _context.SaveChangesAsync();
     return new UserGetDTO {
       Username = user.Username,
       Email = user.Email,
@@ -38,15 +38,15 @@ public class UserRepository
     };
   }
 
-  public User LoginValidate(string username, string password)
+  public async Task<User> LoginValidate(string username, string password)
   {
-    var userFound = _context.Users.Find(username);
+    var userFound = await _context.Users.FindAsync(username);
     if (userFound is null || userFound.Password != password)
       return null!;
     return userFound;
   }
 
-  public UserGetDTO GetUserByUsername(string username)
+  public async Task<UserGetDTO> GetUserByUsername(string username)
   {
     var user = _context.Users.Where(user => user.Username == username)
       .Select(u => new UserGetDTO
@@ -69,10 +69,10 @@ public class UserRepository
         }).ToList()}).FirstOrDefault();
 
     if(user is null) return null!;
-    return user;
+    return await Task.FromResult(user);
   }
 
-  public IEnumerable<UserGetAllDTO> GetAllUsers()
+  public async Task<IEnumerable<UserGetAllDTO>> GetAllUsers()
   {
     var userList = _context.Users
       .Select(u => new UserGetAllDTO
@@ -93,12 +93,12 @@ public class UserRepository
         }).ToList()
       });
     
-    return userList;
+    return await Task.FromResult(userList);
   }
 
-  public void UpdateUser(UserUpdateDTO user)
+  public async Task<bool> UpdateUser(UserUpdateDTO user)
   {
-    var userFound = _context.Users.Find(user.Username);
+    var userFound = await _context.Users.FindAsync(user.Username);
     if (userFound is not null)
     {
       userFound.Email = String.IsNullOrEmpty(user.Email) ? userFound.Email : user.Email;
@@ -107,17 +107,19 @@ public class UserRepository
       userFound.Password = String.IsNullOrEmpty(user.Password) ? userFound.Password : user.Password;
       userFound.Photo = String.IsNullOrEmpty(user.Photo) ? userFound.Photo : user.Photo;
       userFound.Status = String.IsNullOrEmpty(user.Status) ? userFound.Status : user.Status;
-      _context.SaveChanges();
+      await _context.SaveChangesAsync();
     }
+    return true;
   }
 
-  public void DeleteUser(string username)
+  public async Task<bool> DeleteUser(string username)
   {
-    var userFound = _context.Users.Find(username);
+    var userFound = await _context.Users.FindAsync(username);
     if (userFound is not null)
     {
-      _context.Users.Remove(userFound);
-      _context.SaveChanges();
+      await Task.Run(() => _context.Users.Remove(userFound));
+      await _context.SaveChangesAsync();
     }
+    return true;
   }
 }
