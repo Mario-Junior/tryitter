@@ -59,7 +59,7 @@ public static class Helpers
   public static List<Post> GetPostListForTests() =>
       new() {
                 new Post {
-                    Id = new Guid(),
+                    Id = new Guid("123e4567e89b12d3a456426655440000"),
                     Text = "Post 1",
                     Image = "http://local.com/post1.jpg",
                     Username = "test1",

@@ -61,4 +61,71 @@ public class PostRepositoryTest
         // Assert
         result.Count().Should().Be(postListLength);
     }
+
+    public readonly static TheoryData<TryitterContext, string, Guid, PostGetDTO> GetPostByUsernameAndIdOkTestData =
+    new()
+    {
+        {
+            Helpers.GetContextInstanceForTests("GetPostByUsernameAndIdOkTest"),
+            "test1",
+            new Guid("123e4567e89b12d3a456426655440000"),
+            new PostGetDTO {
+                Id = new Guid("123e4567e89b12d3a456426655440000"),
+                Text = "Post 1",
+                Image = "http://local.com/post1.jpg",
+                Username = "test1",
+                CreatedAt = DateTime.Today,
+                UpdatedAt = DateTime.Today
+            }
+        },
+    };
+
+    [Theory(DisplayName = "Get post by username and Id successfully")]
+    [MemberData(nameof(GetPostByUsernameAndIdOkTestData))]
+    public async Task GetPostByUsernameAndIdOkTest(TryitterContext context, string username, Guid postId, PostGetDTO postFound)
+    {
+        // Arrange
+        context.ChangeTracker.Clear();
+        PostRepository _postRepository = new(context);
+
+        // Act
+        var result = await _postRepository.GetPostByUsernameAndId(username, postId);
+
+        // Assert
+        result.Should().BeEquivalentTo(postFound);
+    }
+
+    public readonly static TheoryData<TryitterContext, string, Guid, PostGetDTO> GetPostByUsernameAndIdFailTestData =
+    new()
+    {
+        {
+            Helpers.GetContextInstanceForTests("GetPostByUsernameAndIdFailTest"),
+            "test1",
+            new Guid("123e4567e89b12d3a456426655440001"),
+            new PostGetDTO {
+                Id = new Guid("123e4567e89b12d3a456426655440000"),
+                Text = "Post 1",
+                Image = "http://local.com/post1.jpg",
+                Username = "test1",
+                CreatedAt = DateTime.Today,
+                UpdatedAt = DateTime.Today
+            }
+        },
+    };
+
+    [Theory(DisplayName = "Get post by username and Id not successfully")]
+    [MemberData(nameof(GetPostByUsernameAndIdFailTestData))]
+    public async Task GetPostByUsernameAndIdFailTest(TryitterContext context, string username, Guid postIdWrong, PostGetDTO postExpected)
+    {
+        // Arrange
+        context.ChangeTracker.Clear();
+        PostRepository _postRepository = new(context);
+
+        // Act
+        var result = await _postRepository.GetPostByUsernameAndId(username, postIdWrong);
+
+        // Assert
+        result.Should().NotBeEquivalentTo(postExpected);
+        result.Should().BeNull();
+    }
 }

@@ -98,7 +98,7 @@ public class UserRepositoryTest
 
     [Theory(DisplayName = "Login user not successfully")]
     [MemberData(nameof(LoginValidateFailTestData))]
-    public async Task LoginValidateFailTest(TryitterContext context, string username, string passwordWrong, User userFound)
+    public async Task LoginValidateFailTest(TryitterContext context, string username, string passwordWrong, User userExpected)
     {
         // Arange
         context.ChangeTracker.Clear();
@@ -108,7 +108,7 @@ public class UserRepositoryTest
         var result = await _userRepository.LoginValidate(username, passwordWrong);
 
         // Assert
-        result.Should().NotBeEquivalentTo(userFound);
+        result.Should().NotBeEquivalentTo(userExpected);
         result.Should().BeNull();
     }
 
@@ -167,7 +167,7 @@ public class UserRepositoryTest
 
     [Theory(DisplayName = "Get user by username not successfully")]
     [MemberData(nameof(GetUserByUsernameFailData))]
-    public async Task GetUserByUsernameFailTest(TryitterContext context, string usernameWrong, UserGetDTO userFound)
+    public async Task GetUserByUsernameFailTest(TryitterContext context, string usernameWrong, UserGetDTO userExpected)
     {
         // Arrange
         context.ChangeTracker.Clear();
@@ -177,7 +177,7 @@ public class UserRepositoryTest
         var result = await _userRepository.GetUserByUsername(usernameWrong);
 
         // Assert
-        result.Should().NotBeEquivalentTo(userFound);
+        result.Should().NotBeEquivalentTo(userExpected);
         result.Should().BeNull();
     }
 
