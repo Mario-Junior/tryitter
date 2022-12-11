@@ -115,7 +115,7 @@ public class UserRepository
   public async Task<bool> DeleteUser(string username)
   {
     var userFound = await _context.Users.FindAsync(username);
-    if (userFound is not null)
+    if (userFound is null) return false;
     {
       await Task.Run(() => _context.Users.Remove(userFound));
       await _context.SaveChangesAsync();

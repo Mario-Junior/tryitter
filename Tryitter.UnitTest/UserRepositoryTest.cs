@@ -249,14 +249,62 @@ public class UserRepositoryTest
 
     [Theory(DisplayName = "Update user not successfully")]
     [MemberData(nameof(UpdateUserFailTestData))]
-    public async Task UpdateUserFailTest(TryitterContext context, UserUpdateDTO userToUpdate)
+    public async Task UpdateUserFailTest(TryitterContext context, UserUpdateDTO userToUpdateWrong)
     {
         // Arrange
         context.ChangeTracker.Clear();
         UserRepository _userRepository = new(context);
 
         // Act
-        var result = await _userRepository.UpdateUser(userToUpdate);
+        var result = await _userRepository.UpdateUser(userToUpdateWrong);
+
+        // Assert
+        result.Should().BeFalse();
+    }
+
+    public readonly static TheoryData<TryitterContext, string> DeleteUserOkTestData =
+    new()
+    {
+        {
+            Helpers.GetContextInstanceForTests("DeleteUserOkTest"),
+            "test3"
+        },
+    };
+
+    [Theory(DisplayName = "Delete user successfully")]
+    [MemberData(nameof(DeleteUserOkTestData))]
+    public async Task DeleteUserOkTest(TryitterContext context, string usernameToDelete)
+    {
+        // Arrange
+        context.ChangeTracker.Clear();
+        UserRepository _userRepository = new(context);
+
+        // Act
+        var result = await _userRepository.DeleteUser(usernameToDelete);
+
+        // Assert
+        result.Should().BeTrue();
+    }
+
+    public readonly static TheoryData<TryitterContext, string> DeleteUserFailTestData =
+    new()
+    {
+        {
+            Helpers.GetContextInstanceForTests("DeleteUserFailTest"),
+            "test100"
+        },
+    };
+
+    [Theory(DisplayName = "Delete user not successfully")]
+    [MemberData(nameof(DeleteUserFailTestData))]
+    public async Task DeleteUserFailTest(TryitterContext context, string usernameToDeleteWrong)
+    {
+        // Arrange
+        context.ChangeTracker.Clear();
+        UserRepository _userRepository = new(context);
+
+        // Act
+        var result = await _userRepository.DeleteUser(usernameToDeleteWrong);
 
         // Assert
         result.Should().BeFalse();
