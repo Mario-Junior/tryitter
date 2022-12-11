@@ -87,7 +87,7 @@ app.MapControllers();
 
 app.Run();
 
-namespace Tryitter.Program
+namespace Tryitter.Application
 {
   public partial class Program { }
 }
