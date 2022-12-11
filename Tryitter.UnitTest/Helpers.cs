@@ -68,24 +68,24 @@ public static class Helpers
                 },
                 new Post {
                     Id = new Guid(),
-                    Text = "Post 1",
-                    Image = "http://local.com/post1.jpg",
+                    Text = "Post 2",
+                    Image = "http://local.com/post2.jpg",
                     Username = "test1",
                     CreatedAt = DateTime.Today,
                     UpdatedAt = DateTime.Today
                 },
                 new Post {
                     Id = new Guid(),
-                    Text = "Post 1",
-                    Image = "http://local.com/post1.jpg",
+                    Text = "Post 3",
+                    Image = "http://local.com/post3.jpg",
                     Username = "test1",
                     CreatedAt = DateTime.Today,
                     UpdatedAt = DateTime.Today
                 },
                 new Post {
                     Id = new Guid(),
-                    Text = "Post 1",
-                    Image = "http://local.com/post1.jpg",
+                    Text = "Post 4",
+                    Image = "http://local.com/post4.jpg",
                     Username = "test1",
                     CreatedAt = DateTime.Today,
                     UpdatedAt = DateTime.Today
@@ -100,8 +100,8 @@ public static class Helpers
                 },
                 new Post {
                     Id = new Guid(),
-                    Text = "Post 1",
-                    Image = "http://local.com/post1.jpg",
+                    Text = "Post 2",
+                    Image = "http://local.com/post2.jpg",
                     Username = "test2",
                     CreatedAt = DateTime.Today,
                     UpdatedAt = DateTime.Today

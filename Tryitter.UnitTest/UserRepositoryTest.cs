@@ -30,11 +30,14 @@ public class UserRepositoryTest
     [MemberData(nameof(CreateUserTestData))]
     public async Task CreateUserTest(TryitterContext context, UserCreateDTO newUser, string usernameExpected, string emailExpected)
     {
+        // Arrange
         context.ChangeTracker.Clear();
-
         UserRepository _userRepository = new(context);
+
+        // Act
         var result = await _userRepository.CreateUser(newUser);
 
+        // Assert
         result.Username.Should().Be(usernameExpected);
         result.Email.Should().Be(emailExpected);
     }
@@ -63,11 +66,14 @@ public class UserRepositoryTest
     [MemberData(nameof(LoginValidateOkTestData))]
     public async Task LoginValidateOkTest(TryitterContext context, string username, string password, User userFound)
     {
+        // Arrange
         context.ChangeTracker.Clear();
-
         UserRepository _userRepository = new(context);
+
+        // Act
         var result = await _userRepository.LoginValidate(username, password);
 
+        // Assert
         result.Should().BeEquivalentTo(userFound);
     }
 
@@ -95,11 +101,83 @@ public class UserRepositoryTest
     [MemberData(nameof(LoginValidateFailTestData))]
     public async Task LoginValidateFailTest(TryitterContext context, string username, string passwordWrong, User userFound)
     {
+        // Arange
         context.ChangeTracker.Clear();
-
         UserRepository _userRepository = new(context);
+
+        // Act
         var result = await _userRepository.LoginValidate(username, passwordWrong);
 
+        // Assert
+        result.Should().NotBeEquivalentTo(userFound);
+        result.Should().BeNull();
+    }
+
+    public readonly static TheoryData<TryitterContext, string, UserGetDTO> GetUserByUsernameOkData =
+    new()
+    {
+        {
+            Helpers.GetContextInstanceForTests("GetUserByUsernameOkTest"),
+            "test3",
+            new UserGetDTO {
+                    Username = "test3",
+                    Email = "test3@test.com",
+                    Name = "test 3",
+                    Photo = "http://local.com/test3.jpg",
+                    Module = "Computer Science",
+                    Status = "testing 3",
+                    CreatedAt = DateTime.Today,
+                    Posts = new List<PostGetDTO> {},
+                }
+        },
+    };
+
+    [Theory(DisplayName = "Get user by username successfully")]
+    [MemberData(nameof(GetUserByUsernameOkData))]
+    public async Task GetUserByUsernameOkTest(TryitterContext context, string username, UserGetDTO userFound)
+    {
+        // Arrange
+        context.ChangeTracker.Clear();
+        UserRepository _userRepository = new(context);
+
+        // Act
+        var result = await _userRepository.GetUserByUsername(username);
+
+        // Assert
+        result.Should().BeEquivalentTo(userFound);
+    }
+
+    public readonly static TheoryData<TryitterContext, string, UserGetDTO> GetUserByUsernameFailData =
+    new()
+    {
+        {
+            Helpers.GetContextInstanceForTests("GetUserByUsernameFailTest"),
+            "test4",
+            new UserGetDTO {
+                    Username = "test3",
+                    Email = "test3@test.com",
+                    Name = "test 3",
+                    Photo = "http://local.com/test3.jpg",
+                    Module = "Computer Science",
+                    Status = "testing 3",
+                    CreatedAt = DateTime.Today,
+                    Posts = new List<PostGetDTO> {},
+                }
+        },
+    };
+
+    [Theory(DisplayName = "Get user by username not successfully")]
+    [MemberData(nameof(GetUserByUsernameFailData))]
+    public async Task GetUserByUsernameFailTest(TryitterContext context, string usernameWrong, UserGetDTO userFound)
+    {
+        // Arrange
+        context.ChangeTracker.Clear();
+        UserRepository _userRepository = new(context);
+
+        // Act
+        var result = await _userRepository.GetUserByUsername(usernameWrong);
+
+        // Assert
         result.Should().NotBeEquivalentTo(userFound);
         result.Should().BeNull();
     }
