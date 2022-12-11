@@ -56,6 +56,38 @@ public class UserIntegrationTest : IClassFixture<TestingWebAppFactory<Program>>
         responseContent.Should().Contain(responseJsonContent);
     }
 
+    public readonly static TheoryData<string, UserLoginDTO, string> LoginTestData =
+    new()
+    {
+        {
+            "/user/login",
+            new UserLoginDTO {
+                Username = "test1",
+                Password = "test1234",
+            },
+            "Bearer "
+        },
+    };
+
+    [Theory(DisplayName = "POST /User/login generates JWT Token successfully")]
+    [MemberData(nameof(LoginTestData))]
+    public async Task LoginTest(string path, UserLoginDTO userToLogin, string responseJsonContent)
+    {
+        // Arrange
+        var userDataJson = JsonConvert.SerializeObject(userToLogin);
+        var requestContent = new StringContent(userDataJson, Encoding.UTF8, "application/json");
+
+        // Act
+        var response = await _client.PostAsync(path, requestContent);
+        var responseTokenContent = await response.Content.ReadAsStringAsync();
+        var tokenParts = responseTokenContent.Split(".");
+
+        // Assert
+        response.StatusCode.Should().Be(HttpStatusCode.OK);
+        responseTokenContent.Should().Contain(responseJsonContent);
+        tokenParts.Length.Should().Be(3);
+    }
+
     [Theory(DisplayName = "GET /User returns an user list")]
     [InlineData("/user")]
     public async Task GetAllUsersTest(string url)
