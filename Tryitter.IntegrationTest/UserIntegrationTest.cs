@@ -132,7 +132,7 @@ public class UserIntegrationTest : IClassFixture<TestingWebAppFactory<Program>>
             "/user",
             new UserUpdateDTO {
                 Username = "test2",
-                Name = "test Update",
+                Name = "test update",
                 Status = "testing update",
             },
             "User updated"
@@ -166,5 +166,40 @@ public class UserIntegrationTest : IClassFixture<TestingWebAppFactory<Program>>
         // Assert
         response.StatusCode.Should().Be(HttpStatusCode.OK);
         responseContent.Should().Contain(responseJsonContent);
+    }
+
+    public readonly static TheoryData<string, string> DeleteUserTestData =
+    new()
+    {
+        {
+            "/user",
+            "test2"
+        },
+    };
+
+    [Theory(DisplayName = "DELETE /User removes the user successfully")]
+    [MemberData(nameof(DeleteUserTestData))]
+    public async Task DeleteUserTest(string path, string usernameToDelete)
+    {
+        // Arrange
+        var pathToDelete = $"{path}/{usernameToDelete}";
+        User userToToken = new() {
+            Username = "test2",
+            Email = "test2@test.com",
+            Name = "test 2",
+            Password = "test1234",
+            Photo = "http://local.com/test2.jpg",
+            Module = "Computer Science",
+            Status = "testing 2",
+            CreatedAt = DateTime.Today
+        };
+        var token = new TokenGenerator().Generate(userToToken);
+        _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+        // Act
+        var response = await _client.DeleteAsync(pathToDelete);
+
+        // Assert
+        response.StatusCode.Should().Be(HttpStatusCode.NoContent);
     }
 }

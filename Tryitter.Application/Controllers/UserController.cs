@@ -74,14 +74,14 @@ public class UserController : ControllerBase
     return Ok("User updated");
   }
   
-  [HttpDelete]
+  [HttpDelete("{username}")]
   [Authorize(Policy = "AuthorizedUser")]
-  public async Task<IActionResult> DeleteUser([FromBody] string username)
+  public async Task<IActionResult> DeleteUser(string username)
   {
     var authenticatedUsername = User.Identity!.Name;
     if (authenticatedUsername != username) return Forbid();
 
-    await _repository.DeleteUser(username);
+    await _repository.DeleteUser(authenticatedUsername);
     return NoContent();
   }
 }
