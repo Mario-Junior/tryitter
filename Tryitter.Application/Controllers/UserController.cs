@@ -1,9 +1,8 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Tryitter.Models;
+using Tryitter.Auth;
 using Tryitter.DTO;
 using Tryitter.Repository;
-using Tryitter.Auth;
 
 namespace Tryitter.Controllers;
 

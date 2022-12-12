@@ -1,4 +1,3 @@
-using Microsoft.EntityFrameworkCore;
 using Tryitter.Models;
 
 namespace Tryitter.IntegrationTest;

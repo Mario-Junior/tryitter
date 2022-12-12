@@ -1,15 +1,10 @@
-using Microsoft.AspNetCore.Mvc.Testing;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
 using System.Net;
 using System.Net.Http.Headers;
-using System.Net.Http.Json;
 using System.Text;
 using Tryitter.Application;
 using Tryitter.Models;
 using Tryitter.DTO;
-using Tryitter.Repository;
 using Tryitter.Auth;
 
 namespace Tryitter.IntegrationTest;

@@ -1,6 +1,5 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Tryitter.Models;
 using Tryitter.DTO;
 using Tryitter.Repository;
 
