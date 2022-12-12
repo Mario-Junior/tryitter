@@ -31,9 +31,9 @@ public class PostIntegrationTest : IClassFixture<TestingWebAppFactory<Program>>
             new PostCreateDTO {
                 Text = "Post 1",
                 Image = "http://local.com/post1.jpg",
-                Username = "test2",
+                Username = "test3",
             },
-            "\"text\":\"Post 1\",\"image\":\"http://local.com/post1.jpg\",\"username\":\"test2\""
+            "\"text\":\"Post 1\",\"image\":\"http://local.com/post1.jpg\",\"username\":\"test3\""
         },
     };
 
@@ -45,13 +45,13 @@ public class PostIntegrationTest : IClassFixture<TestingWebAppFactory<Program>>
         var userDataJson = JsonConvert.SerializeObject(newUser);
         var requestContent = new StringContent(userDataJson, Encoding.UTF8, "application/json");
         User userToToken = new() {
-            Username = "test2",
-            Email = "test2@test.com",
-            Name = "test 2",
+            Username = "test3",
+            Email = "test3@test.com",
+            Name = "test 3",
             Password = "test1234",
-            Photo = "http://local.com/test2.jpg",
+            Photo = "http://local.com/test3.jpg",
             Module = "Computer Science",
-            Status = "testing 2",
+            Status = "testing 3",
             CreatedAt = DateTime.Today
         };
         var token = new TokenGenerator().Generate(userToToken);
@@ -112,6 +112,59 @@ public class PostIntegrationTest : IClassFixture<TestingWebAppFactory<Program>>
 
         // Act
         var response = await _client.GetAsync(pathToGet);
+        var responseContent = await response.Content.ReadAsStringAsync();
+
+        // Assert
+        response.StatusCode.Should().Be(HttpStatusCode.OK);
+        responseContent.Should().Contain(responseJsonContent);
+    }
+
+    [Theory(DisplayName = "GET /Post returns a post list")]
+    [InlineData("/post")]
+    public async Task GetAllPostsTest(string path)
+    {
+        var response = await _client.GetAsync(path);
+
+        response.StatusCode.Should().Be(HttpStatusCode.OK);
+    }
+
+    public readonly static TheoryData<string, PostUpdateDTO, string, string> UpdatePostTestData =
+    new()
+    {
+        {
+            "/post",
+            new PostUpdateDTO {
+                Id = new Guid("123e4567e89b12d3a456426655440001"),
+                Text = "Post update",
+            },
+            "test2",
+            "Post updated"
+        },
+    };
+
+    [Theory(DisplayName = "PUT /Post updates the post successfully")]
+    [MemberData(nameof(UpdatePostTestData))]
+    public async Task UpdatePostTest(string path, PostUpdateDTO postToUpdate, string username, string responseJsonContent)
+    {
+        // Arrange
+        var pathToPut = $"{path}/{username}";
+        var postDataJson = JsonConvert.SerializeObject(postToUpdate);
+        var requestContent = new StringContent(postDataJson, Encoding.UTF8, "application/json");
+        User userToToken = new() {
+            Username = "test2",
+            Email = "test2@test.com",
+            Name = "test 2",
+            Password = "test1234",
+            Photo = "http://local.com/test2.jpg",
+            Module = "Computer Science",
+            Status = "testing 2",
+            CreatedAt = DateTime.Today
+        };
+        var token = new TokenGenerator().Generate(userToToken);
+        _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+        // Act
+        var response = await _client.PutAsync(pathToPut, requestContent);
         var responseContent = await response.Content.ReadAsStringAsync();
 
         // Assert

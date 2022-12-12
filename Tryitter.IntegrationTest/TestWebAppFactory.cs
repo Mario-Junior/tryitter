@@ -22,7 +22,6 @@ public class TestingWebAppFactory<TEntryPoint> : WebApplicationFactory<Program> 
       var sp = services.BuildServiceProvider();
       var scope = sp.CreateScope();
       var appContext = scope.ServiceProvider.GetRequiredService<TryitterContext>();
-      appContext.Database.EnsureCreated();
       appContext.Database.EnsureDeleted();
       appContext.Database.EnsureCreated();
       appContext.Users.AddRange(

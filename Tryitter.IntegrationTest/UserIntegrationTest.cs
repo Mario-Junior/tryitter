@@ -173,7 +173,7 @@ public class UserIntegrationTest : IClassFixture<TestingWebAppFactory<Program>>
     {
         {
             "/user",
-            "test2"
+            "test3"
         },
     };
 
@@ -184,13 +184,13 @@ public class UserIntegrationTest : IClassFixture<TestingWebAppFactory<Program>>
         // Arrange
         var pathToDelete = $"{path}/{usernameToDelete}";
         User userToToken = new() {
-            Username = "test2",
-            Email = "test2@test.com",
-            Name = "test 2",
+            Username = "test3",
+            Email = "test3@test.com",
+            Name = "test 3",
             Password = "test1234",
-            Photo = "http://local.com/test2.jpg",
+            Photo = "http://local.com/test3.jpg",
             Module = "Computer Science",
-            Status = "testing 2",
+            Status = "testing 3",
             CreatedAt = DateTime.Today
         };
         var token = new TokenGenerator().Generate(userToToken);
