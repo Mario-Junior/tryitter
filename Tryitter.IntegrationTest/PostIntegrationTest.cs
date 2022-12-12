@@ -65,4 +65,30 @@ public class PostIntegrationTest : IClassFixture<TestingWebAppFactory<Program>>
         response.StatusCode.Should().Be(HttpStatusCode.Created);
         responseContent.Should().Contain(responseJsonContent);
     }
+
+    public readonly static TheoryData<string, string, string> GetPostsByUsernameTestData =
+    new()
+    {
+        {
+            "/post",
+            "test1",
+            "\"text\":\"Post 1\",\"image\":\"http://local.com/post1.jpg\",\"username\":\"test1\""
+        },
+    };
+
+    [Theory(DisplayName = "GET /Post/{username} returns a post list by username successfully")]
+    [MemberData(nameof(GetPostsByUsernameTestData))]
+    public async Task GetPostsByUsernameTest(string path, string username, string responseJsonContent)
+    {
+        // Arrange
+        var pathToGet = $"{path}/{username}";
+
+        // Act
+        var response = await _client.GetAsync(pathToGet);
+        var responseContent = await response.Content.ReadAsStringAsync();
+
+        // Assert
+        response.StatusCode.Should().Be(HttpStatusCode.OK);
+        responseContent.Should().Contain(responseJsonContent);
+    }
 }
