@@ -8,6 +8,7 @@ using System.Net.Http.Json;
 using System.Text;
 using Tryitter.Application;
 using Tryitter.Models;
+using Tryitter.DTO;
 using Tryitter.Repository;
 using Tryitter.Auth;
 
@@ -29,15 +30,15 @@ public class UserIntegrationTest : IClassFixture<TestingWebAppFactory<Program>>
         {
             "/user",
             new UserCreateDTO {
-                Username = "test4",
-                Email = "test4@test.com",
-                Name = "test 4",
+                Username = "test0",
+                Email = "test0@test.com",
+                Name = "test 0",
                 Password = "test1234",
-                Photo = "http://local.com/test4.jpg",
+                Photo = "http://local.com/test0.jpg",
                 Module = "Computer Science",
-                Status = "testing 4",
+                Status = "testing 0",
             },
-            "{\"username\":\"test4\",\"email\":\"test4@test.com\",\"name\":\"test 4\""
+            "{\"username\":\"test0\",\"email\":\"test0@test.com\",\"name\":\"test 0\""
         },
     };
 
@@ -95,8 +96,8 @@ public class UserIntegrationTest : IClassFixture<TestingWebAppFactory<Program>>
     {
         {
             "/user",
-            "test1",
-            "{\"username\":\"test1\",\"email\":\"test1@test.com\",\"name\":\"test 1\""
+            "test2",
+            "{\"username\":\"test2\",\"email\":\"test2@test.com\",\"name\":\"test 2\""
         },
     };
 
@@ -131,7 +132,7 @@ public class UserIntegrationTest : IClassFixture<TestingWebAppFactory<Program>>
         {
             "/user",
             new UserUpdateDTO {
-                Username = "test2",
+                Username = "test3",
                 Name = "test update",
                 Status = "testing update",
             },
@@ -147,13 +148,13 @@ public class UserIntegrationTest : IClassFixture<TestingWebAppFactory<Program>>
         var userDataJson = JsonConvert.SerializeObject(userToUpdate);
         var requestContent = new StringContent(userDataJson, Encoding.UTF8, "application/json");
         User userToToken = new() {
-            Username = "test2",
-            Email = "test2@test.com",
-            Name = "test 2",
+            Username = "test3",
+            Email = "test3@test.com",
+            Name = "test 3",
             Password = "test1234",
-            Photo = "http://local.com/test2.jpg",
+            Photo = "http://local.com/test3.jpg",
             Module = "Computer Science",
-            Status = "testing 2",
+            Status = "testing 3",
             CreatedAt = DateTime.Today
         };
         var token = new TokenGenerator().Generate(userToToken);
@@ -173,7 +174,7 @@ public class UserIntegrationTest : IClassFixture<TestingWebAppFactory<Program>>
     {
         {
             "/user",
-            "test3"
+            "test4"
         },
     };
 
@@ -184,13 +185,13 @@ public class UserIntegrationTest : IClassFixture<TestingWebAppFactory<Program>>
         // Arrange
         var pathToDelete = $"{path}/{usernameToDelete}";
         User userToToken = new() {
-            Username = "test3",
-            Email = "test3@test.com",
-            Name = "test 3",
+            Username = "test4",
+            Email = "test4@test.com",
+            Name = "test 4",
             Password = "test1234",
             Photo = "http://local.com/test3.jpg",
             Module = "Computer Science",
-            Status = "testing 3",
+            Status = "testing 4",
             CreatedAt = DateTime.Today
         };
         var token = new TokenGenerator().Generate(userToToken);

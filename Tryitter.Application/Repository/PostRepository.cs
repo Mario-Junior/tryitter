@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 using Tryitter.Models;
+using Tryitter.DTO;
 
 namespace Tryitter.Repository;
 

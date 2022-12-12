@@ -8,6 +8,7 @@ using System.Net.Http.Json;
 using System.Text;
 using Tryitter.Application;
 using Tryitter.Models;
+using Tryitter.DTO;
 using Tryitter.Repository;
 using Tryitter.Auth;
 
@@ -31,9 +32,9 @@ public class PostIntegrationTest : IClassFixture<TestingWebAppFactory<Program>>
             new PostCreateDTO {
                 Text = "Post 1",
                 Image = "http://local.com/post1.jpg",
-                Username = "test3",
+                Username = "test5",
             },
-            "\"text\":\"Post 1\",\"image\":\"http://local.com/post1.jpg\",\"username\":\"test3\""
+            "\"text\":\"Post 1\",\"image\":\"http://local.com/post1.jpg\",\"username\":\"test5\""
         },
     };
 
@@ -45,13 +46,13 @@ public class PostIntegrationTest : IClassFixture<TestingWebAppFactory<Program>>
         var userDataJson = JsonConvert.SerializeObject(newUser);
         var requestContent = new StringContent(userDataJson, Encoding.UTF8, "application/json");
         User userToToken = new() {
-            Username = "test3",
-            Email = "test3@test.com",
-            Name = "test 3",
+            Username = "test5",
+            Email = "test5@test.com",
+            Name = "test create post",
             Password = "test1234",
-            Photo = "http://local.com/test3.jpg",
+            Photo = "http://local.com/test5.jpg",
             Module = "Computer Science",
-            Status = "testing 3",
+            Status = "testing 5",
             CreatedAt = DateTime.Today
         };
         var token = new TokenGenerator().Generate(userToToken);
@@ -71,8 +72,8 @@ public class PostIntegrationTest : IClassFixture<TestingWebAppFactory<Program>>
     {
         {
             "/post",
-            "test1",
-            "\"text\":\"Post 1\",\"image\":\"http://local.com/post1.jpg\",\"username\":\"test1\""
+            "test6",
+            "\"text\":\"Post 1\",\"image\":\"http://local.com/post1.jpg\",\"username\":\"test6\""
         },
     };
 
@@ -97,13 +98,13 @@ public class PostIntegrationTest : IClassFixture<TestingWebAppFactory<Program>>
     {
         {
             "/post",
-            "test1",
-            new Guid("123e4567e89b12d3a456426655440000"),
-            "\"text\":\"Post 1\",\"image\":\"http://local.com/post1.jpg\",\"username\":\"test1\""
+            "test7",
+            new Guid("123e4567e89b12d3a456426655440001"),
+            "\"text\":\"Post 1\",\"image\":\"http://local.com/post1.jpg\",\"username\":\"test7\""
         },
     };
 
-    [Theory(DisplayName = "GET /Post/{username} returns a post list by username successfully")]
+    [Theory(DisplayName = "GET /Post/{username}/{postId} returns a post by username and postId successfully")]
     [MemberData(nameof(GetPostsByUsernameAndIdTestData))]
     public async Task GetPostsByUsernameAndIdTest(string path, string username, Guid postId, string responseJsonContent)
     {
@@ -134,10 +135,10 @@ public class PostIntegrationTest : IClassFixture<TestingWebAppFactory<Program>>
         {
             "/post",
             new PostUpdateDTO {
-                Id = new Guid("123e4567e89b12d3a456426655440001"),
+                Id = new Guid("123e4567e89b12d3a456426655440002"),
                 Text = "Post update",
             },
-            "test2",
+            "test8",
             "Post updated"
         },
     };
@@ -151,13 +152,13 @@ public class PostIntegrationTest : IClassFixture<TestingWebAppFactory<Program>>
         var postDataJson = JsonConvert.SerializeObject(postToUpdate);
         var requestContent = new StringContent(postDataJson, Encoding.UTF8, "application/json");
         User userToToken = new() {
-            Username = "test2",
-            Email = "test2@test.com",
-            Name = "test 2",
+            Username = "test8",
+            Email = "test8@test.com",
+            Name = "test update post",
             Password = "test1234",
-            Photo = "http://local.com/test2.jpg",
+            Photo = "http://local.com/test8.jpg",
             Module = "Computer Science",
-            Status = "testing 2",
+            Status = "testing 8",
             CreatedAt = DateTime.Today
         };
         var token = new TokenGenerator().Generate(userToToken);

@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Tryitter.Models;
+using Tryitter.DTO;
 using Tryitter.Repository;
 
 namespace Tryitter.UnitTest;

@@ -15,15 +15,18 @@ public class TestingWebAppFactory<TEntryPoint> : WebApplicationFactory<Program> 
       var descriptor = services.SingleOrDefault(d => d.ServiceType == typeof(DbContextOptions<TryitterContext>));
       if (descriptor != null)
         services.Remove(descriptor);
-      services.AddEntityFrameworkInMemoryDatabase().AddDbContext<TryitterContext>(options =>
-          {
-            options.UseInMemoryDatabase("InMemoryTest");
-          });
+      services.AddDbContext<TryitterContext>(options =>
+      {
+        options.UseInMemoryDatabase("InMemoryTest");
+      });
+      services.AddScoped<UserRepository>();
+      services.AddScoped<PostRepository>();
       var sp = services.BuildServiceProvider();
       var scope = sp.CreateScope();
       var appContext = scope.ServiceProvider.GetRequiredService<TryitterContext>();
-      appContext.Database.EnsureDeleted();
-      appContext.Database.EnsureCreated();
+      appContext.Database.EnsureCreatedAsync();
+      appContext.Database.EnsureDeletedAsync();
+      appContext.Database.EnsureCreatedAsync();
       appContext.Users.AddRange(
           Helpers.GetUserListForTests()
       );
