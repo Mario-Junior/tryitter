@@ -69,9 +69,9 @@ public class PostController : ControllerBase
     return Ok("Post updated");
   }
 
-  [HttpDelete("{username}")]
+  [HttpDelete("{username}/{postId}")]
   [Authorize(Policy = "AuthorizedUser")]
-  public async Task<IActionResult> DeletePost([FromBody] Guid postId, string username)
+  public async Task<IActionResult> DeletePost(string username, Guid postId)
   {
     var authenticatedUsername = User.Identity!.Name;
     if (authenticatedUsername != username) return Forbid();

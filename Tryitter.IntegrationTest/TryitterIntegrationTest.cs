@@ -24,6 +24,8 @@ public class TryitterIntegrationTest : IClassFixture<TestingWebAppFactory<Progra
         _client = factory.CreateClient();
     }
 
+    // User entity tests //
+
     public readonly static TheoryData<string, UserCreateDTO, string> CreateUserTestData =
     new()
     {
@@ -204,6 +206,8 @@ public class TryitterIntegrationTest : IClassFixture<TestingWebAppFactory<Progra
         response.StatusCode.Should().Be(HttpStatusCode.NoContent);
     }
 
+    // Post entity tests //
+
     public readonly static TheoryData<string, PostCreateDTO, string> CreatePostTestData =
     new()
     {
@@ -351,5 +355,41 @@ public class TryitterIntegrationTest : IClassFixture<TestingWebAppFactory<Progra
         // Assert
         response.StatusCode.Should().Be(HttpStatusCode.OK);
         responseContent.Should().Contain(responseJsonContent);
+    }
+
+    public readonly static TheoryData<string, string, Guid> DeletePostTestData =
+    new()
+    {
+        {
+            "/post",
+            "test9",
+            new Guid("123e4567e89b12d3a456426655440003")
+        },
+    };
+
+    [Theory(DisplayName = "DELETE /Post/{username}/{postId} removes the post of the username successfully")]
+    [MemberData(nameof(DeletePostTestData))]
+    public async Task DeletePostTest(string path, string username, Guid postIdToDelete)
+    {
+        // Arrange
+        var pathToDelete = $"{path}/{username}/{postIdToDelete}";
+        User userToToken = new() {
+            Username = "test9",
+            Email = "test9@test.com",
+            Name = "test delete post",
+            Password = "test1234",
+            Photo = "http://local.com/test9.jpg",
+            Module = "Computer Science",
+            Status = "testing 9",
+            CreatedAt = DateTime.Today
+        };
+        var token = new TokenGenerator().Generate(userToToken);
+        _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+        // Act
+        var response = await _client.DeleteAsync(pathToDelete);
+
+        // Assert
+        response.StatusCode.Should().Be(HttpStatusCode.NoContent);
     }
 }

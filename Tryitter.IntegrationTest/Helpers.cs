@@ -87,6 +87,16 @@ public static class Helpers
                     Status = "testing 8",
                     CreatedAt = DateTime.Today
                 },
+                new User{
+                    Username = "test9",
+                    Email = "test9@test.com",
+                    Name = "test delete post",
+                    Password = "test1234",
+                    Photo = "http://local.com/test9.jpg",
+                    Module = "Computer Science",
+                    Status = "testing 9",
+                    CreatedAt = DateTime.Today
+                },
       };
 
   public static List<Post> GetPostListForTests() =>
@@ -112,6 +122,14 @@ public static class Helpers
                     Text = "Post 1",
                     Image = "http://local.com/post1.jpg",
                     Username = "test8",
+                    CreatedAt = DateTime.Today,
+                    UpdatedAt = DateTime.Today
+                },
+                new Post {
+                    Id = new Guid("123e4567e89b12d3a456426655440003"),
+                    Text = "Post 1",
+                    Image = "http://local.com/post1.jpg",
+                    Username = "test9",
                     CreatedAt = DateTime.Today,
                     UpdatedAt = DateTime.Today
                 },
