@@ -1,14 +1,14 @@
 ﻿using System;
-using System.Diagnostics.CodeAnalysis;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
+#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
+
 namespace Tryitter.Application.Migrations
 {
     /// <inheritdoc />
-    [ExcludeFromCodeCoverage]
-    public partial class TablesCreate : Migration
+    public partial class CreateTables : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -51,6 +51,26 @@ namespace Tryitter.Application.Migrations
                         principalTable: "Users",
                         principalColumn: "Username",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.InsertData(
+                table: "Users",
+                columns: new[] { "Username", "CreatedAt", "Email", "Module", "Name", "Password", "Photo", "Status" },
+                values: new object[,]
+                {
+                    { "user1", new DateTime(2022, 12, 13, 0, 0, 0, 0, DateTimeKind.Local), "user1@test.com", "Computer Science", "User 1", "user1234", "http://local.com/user1.jpg", "Using Tryitter" },
+                    { "user2", new DateTime(2022, 12, 13, 0, 0, 0, 0, DateTimeKind.Local), "user2@test.com", "Computer Science", "User 2", "user1234", "http://local.com/user2.jpg", "Using Tryitter" },
+                    { "user3", new DateTime(2022, 12, 13, 0, 0, 0, 0, DateTimeKind.Local), "user3@test.com", "Computer Science", "User 3", "user1234", "http://local.com/user3.jpg", "Using Tryitter" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Posts",
+                columns: new[] { "Id", "CreatedAt", "Image", "Text", "UpdatedAt", "Username" },
+                values: new object[,]
+                {
+                    { new Guid("2d180bbb-3eb8-43ec-b891-b8c088ed8ba1"), new DateTime(2022, 12, 13, 0, 0, 0, 0, DateTimeKind.Local), "http://local.com/post1.jpg", "Post 1", new DateTime(2022, 12, 13, 0, 0, 0, 0, DateTimeKind.Local), "user1" },
+                    { new Guid("3c3b3cda-8fc9-4049-adae-63599b849eb4"), new DateTime(2022, 12, 13, 0, 0, 0, 0, DateTimeKind.Local), "http://local.com/post1.jpg", "Post 1", new DateTime(2022, 12, 13, 0, 0, 0, 0, DateTimeKind.Local), "user2" },
+                    { new Guid("50091f8c-d738-4df9-b3cd-a4dad58382bb"), new DateTime(2022, 12, 13, 0, 0, 0, 0, DateTimeKind.Local), "http://local.com/post2.jpg", "Post 2", new DateTime(2022, 12, 13, 0, 0, 0, 0, DateTimeKind.Local), "user1" }
                 });
 
             migrationBuilder.CreateIndex(

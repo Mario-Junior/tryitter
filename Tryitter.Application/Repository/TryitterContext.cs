@@ -27,5 +27,65 @@ public class TryitterContext : DbContext
       .HasOne(p => p.User)
       .WithMany(u => u.Posts)
       .HasForeignKey(p => p.Username);
+
+    modelBuilder.Entity<User>().HasData(
+      new User {
+        Username = "user1",
+        Email = "user1@test.com",
+        Name = "User 1",
+        Password = "user1234",
+        Photo = "http://local.com/user1.jpg",
+        Module = "Computer Science",
+        Status = "Using Tryitter",
+        CreatedAt = DateTime.Today
+      },
+      new User {
+        Username = "user2",
+        Email = "user2@test.com",
+        Name = "User 2",
+        Password = "user1234",
+        Photo = "http://local.com/user2.jpg",
+        Module = "Computer Science",
+        Status = "Using Tryitter",
+        CreatedAt = DateTime.Today
+      },
+      new User {
+        Username = "user3",
+        Email = "user3@test.com",
+        Name = "User 3",
+        Password = "user1234",
+        Photo = "http://local.com/user3.jpg",
+        Module = "Computer Science",
+        Status = "Using Tryitter",
+        CreatedAt = DateTime.Today
+      }
+    );
+
+    modelBuilder.Entity<Post>().HasData(
+      new Post {
+        Id = Guid.NewGuid(),
+        Text = "Post 1",
+        Image = "http://local.com/post1.jpg",
+        Username = "user1",
+        CreatedAt = DateTime.Today,
+        UpdatedAt = DateTime.Today
+      },
+      new Post {
+        Id = Guid.NewGuid(),
+        Text = "Post 2",
+        Image = "http://local.com/post2.jpg",
+        Username = "user1",
+        CreatedAt = DateTime.Today,
+        UpdatedAt = DateTime.Today
+      },
+      new Post {
+        Id = Guid.NewGuid(),
+        Text = "Post 1",
+        Image = "http://local.com/post1.jpg",
+        Username = "user2",
+        CreatedAt = DateTime.Today,
+        UpdatedAt = DateTime.Today
+      }
+    );
   }
 }
