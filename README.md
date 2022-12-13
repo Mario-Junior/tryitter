@@ -12,12 +12,8 @@ A API foi desenvolvida seguindo padrão `Repository`, os princípios de arquitet
 
 Para acessar a API e consumir seus serviços, faz-se necessário que a pessoa usuária cadastre-se e faça _login_ com suas credencias. Isso será autenticado pela ferramenta `JWT`, gerando um token seguro `JWT` (_JSON Web Token_), que servirá de autorização da sessão, e validação de acessos a alguns dos serviços disponíveis à pessoa usuária, enquanto conectada a aplicação.
 
----
-
 ## Responsável técnico por este repositório:
 [**Mário JS Júnior**](https://br.linkedin.com/in/mariojr) - Software Engineer [XP Inc.](https://www.xpinc.com/)
-
----
 
 <br />
 
@@ -54,7 +50,7 @@ Para acessar a API e consumir seus serviços, faz-se necessário que a pessoa us
 ![Markdown](https://img.shields.io/badge/Markdown-000000?style=for-the-badge&logo=markdown&logoColor=white)&nbsp;
 ![Azure](https://img.shields.io/badge/microsoft%20azure-0089D6?style=for-the-badge&logo=microsoft-azure&logoColor=white)&nbsp;
 ![Swagger](https://img.shields.io/badge/-Swagger-5AC710?style=for-the-badge&logo=swagger&logoColor=white)&nbsp;
-<!-- ![Docker](https://img.shields.io/badge/-Docker-0078D4?style=for-the-badge&logo=docker&logoColor=white)&nbsp; -->
+
 <br />
 
 # Requisitos Técnicos
@@ -63,6 +59,7 @@ Para acessar a API e consumir seus serviços, faz-se necessário que a pessoa us
 * O banco de dados escolhido para a persistência das informações foi o `SQL Server`, por sua acessibilidade, confiabilidade, robustez e compatibilidade plena com o ecossistema `.NET Core` e o `Entity Framework`. Além de proporcionar opção de implantação (_deploy_) prática no serviço da `Azure`;
 * Para os testes, considerando a aplicação em `.NET Core`, optei pela dupla `xUnit` (como _framework_/base para a melhor organização dos códigos de teste) e `FluentAssertions` (para as asserções, fornecendo formas de dizer ao código o que espero, testar e validar o retorno de forma fluente e intuitiva).
 <br />
+
 Dessa forma, necessitando ainda otimizar o recurso tempo, priorizei a filosofia de testes em `BDD` (_Behavior Driven Development_), onde fiz o desenvolvimento orientado ao comportamento dos requisitos do sistema/aplicação e usando linguagem mais próxima do negócio, desenvolvendo os testes em paralelo à codificação da aplicação;
 <br />
 
@@ -122,7 +119,7 @@ Instale as dependências do projeto
   dotnet restore
 ```
 
-Entre no diretório do repositório
+Entre no diretório da aplicação
 
 ```bash
   cd Tryitter.Application/
@@ -159,9 +156,7 @@ Suba o servidor local
 
 # Aprendizados adicionais e melhorias
 - Converter/encriptar dados sensíveis como Email, Password para hash;
-- Arquivo de variáveis de ambiente (.env ou outro);
+- Arquivo de variáveis de ambiente (`.env` ou outro);
 - Conteinerização da aplicação;
 - Usar contratos via Interfaces;
-- Implementar “modo rascunho” (_draft_);
-
----
+- Implementar “modo rascunho” (_draft_).
