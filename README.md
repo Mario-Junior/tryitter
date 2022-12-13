@@ -41,7 +41,7 @@ Para acessar a API e consumir seus serviços, faz-se necessário que a pessoa us
 </div>
 <br />
 
-<h2 id="techs">Tecnologias utilizadas</h2>
+# Tecnologias utilizadas
 
 ![C#](https://img.shields.io/badge/C%23-239120?style=for-the-badge&logo=c-sharp&logoColor=white)&nbsp;
 ![.NET](https://img.shields.io/badge/.NET-5C2D91?style=for-the-badge&logo=.net&logoColor=white)&nbsp;
@@ -85,14 +85,20 @@ Foram ao todo, `31 asserções`, entre `testes unitários e de integração`, to
 </div>
 <br />
 
+# Documentação
+### A documentação da Aplicação pode ser acessada em Produção pelo endereço:
+[Tryitter](https://tryitter.azuredevops.net/swagger)
+
+<br />
 
 # Executando a Aplicação
 <h2 id="local-run">Localmente</h2>
 
-### Para execução local, você precisará de:
+### Para execução local (exemplo de sistema `Linux`), você precisará de:
 - [.NET](https://learn.microsoft.com/pt-br/dotnet/core/install/linux)
-- [dotnet CLI](https://learn.microsoft.com/pt-br/dotnet/machine-learning/how-to-guides/install-ml-net-cli?tabs=linux)
+- [dotnet CLI](https://learn.microsoft.com/pt-br/dotnet/core/tools/)
 - [SQL Server](https://learn.microsoft.com/pt-br/sql/linux/quickstart-install-connect-ubuntu?view=sql-server-ver16)
+- [Entity Framework](https://learn.microsoft.com/pt-br/ef/core/cli/dotnet)
 - Ferramenta visual de administração de Banco de Dados.
 > Recomendação: [Azure Data Studio](https://learn.microsoft.com/pt-br/sql/azure-data-studio/download-azure-data-studio?view=sql-server-ver16)
 - Client HTTP à sua escolha:
@@ -107,13 +113,31 @@ Foram ao todo, `31 asserções`, entre `testes unitários e de integração`, to
 Entre no diretório do repositório
 
 ```bash
-  cd tryitter
+  cd tryitter/
 ```
 
 Instale as dependências do projeto
 
 ```bash
   dotnet restore
+```
+
+Entre no diretório do repositório
+
+```bash
+  cd Tryitter.Application/
+```
+
+Suba as migrações (migrations) | `caso já não existirem`
+
+```bash
+  dotnet ef migrations add [nome-para-a-migration]
+```
+
+Conecte-se ao sistema de administração de banco de dados e suba o banco de dados
+
+```bash
+  dotnet ef database update
 ```
 
 Suba o servidor local
@@ -126,15 +150,11 @@ Suba o servidor local
 
 ### Como os teste estão totalmente desacoplados de dependências externas, é possível executá-los a qualquer momento pelo comando
 
+`Na pasta ./tryitter`
+
 ```bash
   dotnet test
 ```
-<br />
-
-# Documentação
-### A documentação da Aplicação pode ser acessada em Produção pelo endereço:
-[Tryitter](https://tryitter.azuredevops.net/swagger)
-
 <br />
 
 # Aprendizados adicionais e melhorias
