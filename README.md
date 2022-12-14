@@ -41,15 +41,17 @@ Para acessar a API e consumir seus serviços, faz-se necessário que a pessoa us
 
 ![C#](https://img.shields.io/badge/C%23-239120?style=for-the-badge&logo=c-sharp&logoColor=white)&nbsp;
 ![.NET](https://img.shields.io/badge/.NET-5C2D91?style=for-the-badge&logo=.net&logoColor=white)&nbsp;
-![Entity Framework](https://img.shields.io/badge/Entity_Framework-0078D4?style=for-the-badge&logo=entity-framework&logoColor=white)&nbsp;
+![Entity Framework](https://img.shields.io/badge/Entity_Framework-0078D4?style=for-the-badge&logo=microsoft-entity-framework&logoColor=white)&nbsp;
 ![SQL Server](https://img.shields.io/badge/Microsoft_SQL_Server-CC2927?style=for-the-badge&logo=microsoft-sql-server&logoColor=white)&nbsp;
-![xUnit](https://img.shields.io/badge/xUnit-100000?style=for-the-badge&logo=entity-framework&logoColor=white)&nbsp;
-![FluentAssertions](https://img.shields.io/badge/FluentAssertions-CC2927?style=for-the-badge&logo=entity-framework&logoColor=white)&nbsp;
+![xUnit](https://img.shields.io/badge/xUnit-100000?style=for-the-badge&logo=xunit&logoColor=white)&nbsp;
+![FluentAssertions](https://img.shields.io/badge/FluentAssertions-CC2927?style=for-the-badge&logo=fluent-assertions&logoColor=white)&nbsp;
 ![Git](https://img.shields.io/badge/GIT-E44C30?style=for-the-badge&logo=git&logoColor=white)&nbsp;
 ![GitHub](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white)&nbsp;
 ![Markdown](https://img.shields.io/badge/Markdown-000000?style=for-the-badge&logo=markdown&logoColor=white)&nbsp;
 ![Azure](https://img.shields.io/badge/microsoft%20azure-0089D6?style=for-the-badge&logo=microsoft-azure&logoColor=white)&nbsp;
 ![Swagger](https://img.shields.io/badge/-Swagger-5AC710?style=for-the-badge&logo=swagger&logoColor=white)&nbsp;
+![Docker](https://img.shields.io/badge/-Docker-0089D6?style=for-the-badge&logo=docker&logoColor=white)&nbsp;
+![Grafana K6](https://img.shields.io/badge/Grafana_K6-7D4698?style=for-the-badge&logo=k6&logoColor=white)&nbsp;
 
 <br />
 
