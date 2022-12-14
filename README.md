@@ -89,7 +89,7 @@ Foram ao todo, `31 asserções`, entre `testes unitários e de integração`, to
 
 <h2 id="tests-func">Testes de Carga</h2>
 
-### A aplicação foi testada com cargas de `10`, `100` e `1000` VUs (usuários virtuais), `em ambiente de Produção`, no endpoint de `login`, com as seguintes respostas:<br />
+### A aplicação foi testada com cargas de `10`, `100` e `1.000` VUs (usuários virtuais), `em ambiente de Produção`, no endpoint de `login`, com as seguintes respostas:<br />
 <br />
 
 <strong>10 VUs</strong>
@@ -106,7 +106,7 @@ Foram ao todo, `31 asserções`, entre `testes unitários e de integração`, to
 
 <strong>1.000 VUs</strong>
 <div align="center">
- <img src="./Images/load-test-login-100vu.png" alt="quadro de testes de carga para simulação com 1000 usuários virtuais" width="1920">
+ <img src="./Images/load-test-login-1000vu.png" alt="quadro de testes de carga para simulação com 1000 usuários virtuais" width="1920">
 </div>
 
 <br />
