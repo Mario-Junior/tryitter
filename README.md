@@ -44,7 +44,7 @@ Para acessar a API e consumir seus serviços, faz-se necessário que a pessoa us
 ![Entity Framework](https://img.shields.io/badge/Entity_Framework-0078D4?style=for-the-badge&logo=microsoft-entity-framework&logoColor=white)&nbsp;
 ![SQL Server](https://img.shields.io/badge/Microsoft_SQL_Server-CC2927?style=for-the-badge&logo=microsoft-sql-server&logoColor=white)&nbsp;
 ![xUnit](https://img.shields.io/badge/xUnit-100000?style=for-the-badge&logo=xunit&logoColor=white)&nbsp;
-![FluentAssertions](https://img.shields.io/badge/FluentAssertions-CC2927?style=for-the-badge&logo=fluent-assertions&logoColor=white)&nbsp;
+![FluentAssertions](https://img.shields.io/badge/FluentAssertions-CC2927?style=for-the-badge&logo=fluentassertions&logoColor=white)&nbsp;
 ![Git](https://img.shields.io/badge/GIT-E44C30?style=for-the-badge&logo=git&logoColor=white)&nbsp;
 ![GitHub](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white)&nbsp;
 ![Markdown](https://img.shields.io/badge/Markdown-000000?style=for-the-badge&logo=markdown&logoColor=white)&nbsp;
@@ -70,30 +70,57 @@ Dessa forma, necessitando ainda otimizar o recurso tempo, priorizei a filosofia 
 <div align="center">
  <img src="./Images/diagrama-ER.png" alt="diagrama entidade relacionamento do banco de dados" width="1920">
 </div>
+
 <br />
 
-<h2 id="tests">Testes</h2>
+# Testes
+
+<h2 id="tests-func">Testes Funcionais</h2>
 
 ### A aplicação teve `98%` de todas as suas principais funcionalidades testadas, em todas as camadas.<br />
 Foram ao todo, `31 asserções`, entre `testes unitários e de integração`, todas devidamente confirmadas, com simulação de todas as dependências externas e isolamento completo do banco de dados.
 <br />
 
-<strong>Quadro de resultado de Testes:</strong>
+<strong>Quadro de Cobertura de Testes:</strong>
 <div align="center">
  <img src="./Images/testes-cobertura.png" alt="quadro de testes com noventa e oito porcento da aplicação coberta" width="1920">
 </div>
 <br />
 
+<h2 id="tests-func">Testes de Carga</h2>
+
+### A aplicação foi testada com cargas de `10`, `100` e `1000` VUs (usuários virtuais), `em ambiente de Produção`, no endpoint de `login`, com as seguintes respostas:<br />
+<br />
+
+<strong>10 VUs</strong>
+<div align="center">
+ <img src="./Images/load-test-login-10vu.png" alt="quadro de testes de carga para simulação com 10 usuários virtuais" width="1920">
+</div>
+<br />
+
+<strong>100 VUs</strong>
+<div align="center">
+ <img src="./Images/load-test-login-100vu.png" alt="quadro de testes de carga para simulação com 100 usuários virtuais" width="1920">
+</div>
+<br />
+
+<strong>1.000 VUs</strong>
+<div align="center">
+ <img src="./Images/load-test-login-100vu.png" alt="quadro de testes de carga para simulação com 1000 usuários virtuais" width="1920">
+</div>
+
+<br />
+
 # Documentação
 ### A documentação da Aplicação pode ser acessada em Produção pelo endereço:
-[Tryitter](https://tryitter.azuredevops.net/swagger)
+[Tryitter.Application v1](https://tryitter-application.azurewebsites.net/index.html)
 
 <br />
 
 # Executando a Aplicação
 <h2 id="local-run">Localmente</h2>
 
-### Para execução local (exemplo de sistema `Linux`), você precisará de:
+### Para execução local (exemplo de ambiente em sistema `Linux`), você precisará de:
 - [.NET](https://learn.microsoft.com/pt-br/dotnet/core/install/linux)
 - [dotnet CLI](https://learn.microsoft.com/pt-br/dotnet/core/tools/)
 - [SQL Server](https://learn.microsoft.com/pt-br/sql/linux/quickstart-install-connect-ubuntu?view=sql-server-ver16)
@@ -147,7 +174,7 @@ Suba o servidor local
 
 <br />
 
-### Como os teste estão totalmente desacoplados de dependências externas, é possível executá-los a qualquer momento pelo comando
+### Como os testes estão totalmente desacoplados de dependências externas, é possível executá-los a qualquer momento pelo comando
 
 `Na pasta ./tryitter`
 
@@ -157,7 +184,7 @@ Suba o servidor local
 <br />
 
 # Aprendizados adicionais e melhorias
-- Converter/encriptar dados sensíveis como Email, Password para hash;
+- Converter/encriptar dados sensíveis como Email, Password, etc. para hash;
 - Arquivo de variáveis de ambiente (`.env` ou outro);
 - Conteinerização da aplicação;
 - Usar contratos via Interfaces;
