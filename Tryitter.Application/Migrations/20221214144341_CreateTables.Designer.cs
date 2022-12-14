@@ -12,7 +12,7 @@ using Tryitter.Repository;
 namespace Tryitter.Application.Migrations
 {
     [DbContext(typeof(TryitterContext))]
-    [Migration("20221213230706_CreateTables")]
+    [Migration("20221214144341_CreateTables")]
     partial class CreateTables
     {
         /// <inheritdoc />
@@ -60,30 +60,57 @@ namespace Tryitter.Application.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("2d180bbb-3eb8-43ec-b891-b8c088ed8ba1"),
-                            CreatedAt = new DateTime(2022, 12, 13, 0, 0, 0, 0, DateTimeKind.Local),
+                            Id = new Guid("21ad69ad-63d2-46f5-8bda-8b704a5f211b"),
+                            CreatedAt = new DateTime(2022, 12, 14, 0, 0, 0, 0, DateTimeKind.Local),
                             Image = "http://local.com/post1.jpg",
                             Text = "Post 1",
-                            UpdatedAt = new DateTime(2022, 12, 13, 0, 0, 0, 0, DateTimeKind.Local),
+                            UpdatedAt = new DateTime(2022, 12, 14, 0, 0, 0, 0, DateTimeKind.Local),
                             Username = "user1"
                         },
                         new
                         {
-                            Id = new Guid("50091f8c-d738-4df9-b3cd-a4dad58382bb"),
-                            CreatedAt = new DateTime(2022, 12, 13, 0, 0, 0, 0, DateTimeKind.Local),
+                            Id = new Guid("e2ab3cd8-e088-4b92-ac1a-dc724919ac93"),
+                            CreatedAt = new DateTime(2022, 12, 14, 0, 0, 0, 0, DateTimeKind.Local),
                             Image = "http://local.com/post2.jpg",
                             Text = "Post 2",
-                            UpdatedAt = new DateTime(2022, 12, 13, 0, 0, 0, 0, DateTimeKind.Local),
+                            UpdatedAt = new DateTime(2022, 12, 14, 0, 0, 0, 0, DateTimeKind.Local),
                             Username = "user1"
                         },
                         new
                         {
-                            Id = new Guid("3c3b3cda-8fc9-4049-adae-63599b849eb4"),
-                            CreatedAt = new DateTime(2022, 12, 13, 0, 0, 0, 0, DateTimeKind.Local),
+                            Id = new Guid("8c85b80a-c91d-43fe-b88b-93b502f844c1"),
+                            CreatedAt = new DateTime(2022, 12, 14, 0, 0, 0, 0, DateTimeKind.Local),
+                            Image = "http://local.com/post3.jpg",
+                            Text = "Post 3",
+                            UpdatedAt = new DateTime(2022, 12, 14, 0, 0, 0, 0, DateTimeKind.Local),
+                            Username = "user1"
+                        },
+                        new
+                        {
+                            Id = new Guid("31255d37-5778-498a-80b5-9ed9598582e3"),
+                            CreatedAt = new DateTime(2022, 12, 14, 0, 0, 0, 0, DateTimeKind.Local),
                             Image = "http://local.com/post1.jpg",
                             Text = "Post 1",
-                            UpdatedAt = new DateTime(2022, 12, 13, 0, 0, 0, 0, DateTimeKind.Local),
+                            UpdatedAt = new DateTime(2022, 12, 14, 0, 0, 0, 0, DateTimeKind.Local),
                             Username = "user2"
+                        },
+                        new
+                        {
+                            Id = new Guid("1c529c71-586e-48a7-92bf-b19d92b18540"),
+                            CreatedAt = new DateTime(2022, 12, 14, 0, 0, 0, 0, DateTimeKind.Local),
+                            Image = "http://local.com/post2.jpg",
+                            Text = "Post 2",
+                            UpdatedAt = new DateTime(2022, 12, 14, 0, 0, 0, 0, DateTimeKind.Local),
+                            Username = "user2"
+                        },
+                        new
+                        {
+                            Id = new Guid("038b4a0e-bf51-4e8f-95cb-d0d97312cb22"),
+                            CreatedAt = new DateTime(2022, 12, 14, 0, 0, 0, 0, DateTimeKind.Local),
+                            Image = "http://local.com/post1.jpg",
+                            Text = "Post 1",
+                            UpdatedAt = new DateTime(2022, 12, 14, 0, 0, 0, 0, DateTimeKind.Local),
+                            Username = "user3"
                         });
                 });
 
@@ -131,7 +158,7 @@ namespace Tryitter.Application.Migrations
                         new
                         {
                             Username = "user1",
-                            CreatedAt = new DateTime(2022, 12, 13, 0, 0, 0, 0, DateTimeKind.Local),
+                            CreatedAt = new DateTime(2022, 12, 14, 0, 0, 0, 0, DateTimeKind.Local),
                             Email = "user1@test.com",
                             Module = "Computer Science",
                             Name = "User 1",
@@ -142,7 +169,7 @@ namespace Tryitter.Application.Migrations
                         new
                         {
                             Username = "user2",
-                            CreatedAt = new DateTime(2022, 12, 13, 0, 0, 0, 0, DateTimeKind.Local),
+                            CreatedAt = new DateTime(2022, 12, 14, 0, 0, 0, 0, DateTimeKind.Local),
                             Email = "user2@test.com",
                             Module = "Computer Science",
                             Name = "User 2",
@@ -153,12 +180,23 @@ namespace Tryitter.Application.Migrations
                         new
                         {
                             Username = "user3",
-                            CreatedAt = new DateTime(2022, 12, 13, 0, 0, 0, 0, DateTimeKind.Local),
+                            CreatedAt = new DateTime(2022, 12, 14, 0, 0, 0, 0, DateTimeKind.Local),
                             Email = "user3@test.com",
                             Module = "Computer Science",
                             Name = "User 3",
                             Password = "user1234",
                             Photo = "http://local.com/user3.jpg",
+                            Status = "Using Tryitter"
+                        },
+                        new
+                        {
+                            Username = "user4",
+                            CreatedAt = new DateTime(2022, 12, 14, 0, 0, 0, 0, DateTimeKind.Local),
+                            Email = "user4@test.com",
+                            Module = "Computer Science",
+                            Name = "User 4",
+                            Password = "user1234",
+                            Photo = "http://local.com/user4.jpg",
                             Status = "Using Tryitter"
                         });
                 });

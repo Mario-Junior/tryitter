@@ -16,7 +16,7 @@ public class TryitterContext : DbContext
   {
     if (!optionsBuilder.IsConfigured)
     {
-      var connectionString = "Server=tryitter-db.database.windows.net;Database=tryitter;User=tryitter-admin;Password=pass@1234;TrustServerCertificate=True";
+      var connectionString = "Server=127.0.0.1;Database=tryitter;User=SA;Password=123@SQLServer;TrustServerCertificate=True";
       optionsBuilder.UseSqlServer(connectionString);
     }
   }
@@ -58,6 +58,17 @@ public class TryitterContext : DbContext
         Module = "Computer Science",
         Status = "Using Tryitter",
         CreatedAt = DateTime.Today
+      },
+      new User
+      {
+        Username = "user4",
+        Email = "user4@test.com",
+        Name = "User 4",
+        Password = "user1234",
+        Photo = "http://local.com/user4.jpg",
+        Module = "Computer Science",
+        Status = "Using Tryitter",
+        CreatedAt = DateTime.Today
       }
     );
 
@@ -80,9 +91,36 @@ public class TryitterContext : DbContext
       },
       new Post {
         Id = Guid.NewGuid(),
+        Text = "Post 3",
+        Image = "http://local.com/post3.jpg",
+        Username = "user1",
+        CreatedAt = DateTime.Today,
+        UpdatedAt = DateTime.Today
+      },
+      new Post
+      {
+        Id = Guid.NewGuid(),
         Text = "Post 1",
         Image = "http://local.com/post1.jpg",
         Username = "user2",
+        CreatedAt = DateTime.Today,
+        UpdatedAt = DateTime.Today
+      },
+      new Post
+      {
+        Id = Guid.NewGuid(),
+        Text = "Post 2",
+        Image = "http://local.com/post2.jpg",
+        Username = "user2",
+        CreatedAt = DateTime.Today,
+        UpdatedAt = DateTime.Today
+      },
+      new Post
+      {
+        Id = Guid.NewGuid(),
+        Text = "Post 1",
+        Image = "http://local.com/post1.jpg",
+        Username = "user3",
         CreatedAt = DateTime.Today,
         UpdatedAt = DateTime.Today
       }
